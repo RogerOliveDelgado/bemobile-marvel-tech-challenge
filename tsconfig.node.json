@@ -1,0 +1,10 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"module": "CommonJS", // Use CommonJS for Node.js
+		"outDir": "dist/node", // Output directory for backend files
+		"types": ["node"] // Include Node.js types
+	},
+	"include": ["server/**/*"],
+	"exclude": ["node_modules", "dist"]
+}

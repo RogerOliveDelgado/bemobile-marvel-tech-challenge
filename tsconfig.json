@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "target": "ES2020", // Adjust based on your needs
+    "strict": true, // Enable all strict type-checking options
+    "esModuleInterop": true, // Helps with default imports
+    "forceConsistentCasingInFileNames": true, // Enforce consistent casing
+    "skipLibCheck": true, // Avoid checking type declaration files
+    "baseUrl": ".", // Set the base path for imports
+    "paths": {
+      "@/*": ["src/*"] // Define aliases for better import structure
+    }
+  },
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
+}
