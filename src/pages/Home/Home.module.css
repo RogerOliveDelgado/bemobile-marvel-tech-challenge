@@ -94,3 +94,20 @@
 .favoriteButton:hover .heartIcon {
   transform: scale(1.2);
 }
+
+.loadingBar {
+  width: 0;
+  height: 4px;
+  background-color: red;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    width 5s ease-out,
+    opacity 5s ease-out;
+}
+
+.loadingBar.loading {
+  width: 100%;
+  opacity: 1;
+  visibility: visible;
+}

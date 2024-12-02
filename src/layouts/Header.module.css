@@ -20,3 +20,18 @@
   gap: 5px;
   font-size: 16px;
 }
+
+.loadingBar {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 0;
+  height: 4px;
+  background-color: red;
+  transition: width 0.2s ease-out;
+  z-index: 10;
+}
+
+.loadingBar.loading {
+  width: 100%;
+}

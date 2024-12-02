@@ -2,7 +2,11 @@ import searchIcon from '@/assets/images/search-button.svg'
 import React from 'react'
 import styles from './SearchInput.module.css'
 
-const MainLayout: React.FC = () => {
+interface MainLayoutProps {
+  resultsLength: number
+}
+
+const MainLayout: React.FC<MainLayoutProps> = ({ resultsLength }) => {
   return (
     <section className={styles.search} aria-labelledby="search-label">
       <form className={styles.searchInputWrapper}>
@@ -26,7 +30,7 @@ const MainLayout: React.FC = () => {
           />
         </label>
       </form>
-      <p className={styles.searchResults}>X Results</p>
+      <p className={styles.searchResults}>{resultsLength} RESULTS</p>
     </section>
   )
 }

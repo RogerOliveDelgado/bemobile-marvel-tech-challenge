@@ -4,8 +4,13 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './Header.module.css'
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  loading: boolean
+}
+
+const Header: React.FC<HeaderProps> = ({ loading }) => {
   const navigate = useNavigate()
+
   return (
     <header className={styles.header}>
       <img
@@ -18,6 +23,9 @@ const Header: React.FC = () => {
         <img src={heartIcon} alt="Favorites" className={styles.heartIcon} />
         <span>3</span>
       </div>
+      <div
+        className={`${styles.loadingBar} ${loading ? styles.loading : ''}`}
+      />
     </header>
   )
 }

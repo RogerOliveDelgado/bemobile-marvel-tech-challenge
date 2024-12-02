@@ -1,27 +1,46 @@
 import heartIcon from '@/assets/images/heart-selected.svg'
 import SearchInput from '@/components/SearchInput/SearchInput'
-import favorites from '@/mockData/favorites.json'
-import React from 'react'
+import { useFetch } from '@/hooks/useFetch'
+import React, { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './Home.module.css'
 
+interface Character {
+  id: number
+  name: string
+  thumbnail: {
+    path: string
+    extension: string
+  }
+}
+
 const Home: React.FC = () => {
   const navigate = useNavigate()
+  const params = useMemo(() => ({ orderBy: 'name', limit: 50 }), [])
+  const { data, loading, error } = useFetch<{
+    data: { results: Character[] }
+  }>('/characters?orderBy=name&limit=50', params)
 
-  const handleNavigate = () => {
-    console.log('Consooooooleamoss!')
-    navigate('/character')
+  const handleNavigate = (characterId: number) => {
+    navigate(`/character/${characterId}`)
   }
 
   return (
     <div className={styles.home}>
-      <SearchInput />
+      <div
+        className={`${styles.loadingBar} ${loading ? styles.loading : ''}`}
+      ></div>
+      {!loading && data ? (
+        <SearchInput resultsLength={data.data.results.length} />
+      ) : null}
+
       <div className={styles.dashboard}>
-        {favorites.map((character) => (
+        {error && <p>Error: {error}</p>}
+        {data?.data.results.map((character) => (
           <div
             key={character.id}
             className={styles.characterCard}
-            onClick={handleNavigate}
+            onClick={() => handleNavigate(character.id)}
           >
             <div className={styles.characterImageWrapper}>
               <img
