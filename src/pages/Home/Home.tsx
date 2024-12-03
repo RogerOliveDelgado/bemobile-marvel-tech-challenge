@@ -1,5 +1,6 @@
 import heartIcon from '@/assets/images/heart-selected.svg'
 import SearchInput from '@/components/SearchInput/SearchInput'
+import { useCharacter } from '@/contexts/CharacterContext'
 import useDebounce from '@/hooks/useDebounce'
 import { useFetch } from '@/hooks/useFetch'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
@@ -13,6 +14,7 @@ interface Character {
     path: string
     extension: string
   }
+  description: string
 }
 
 const Home: React.FC = () => {
@@ -23,6 +25,7 @@ const Home: React.FC = () => {
     data: { results: Character[] }
   }>('/characters', params)
 
+  const { setSelectedCharacter } = useCharacter()
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState<Character[]>([])
   const searchParams = useMemo(
@@ -56,8 +59,9 @@ const Home: React.FC = () => {
     }
   }, [searchData])
 
-  const handleNavigate = (characterId: number) => {
-    navigate(`/character/${characterId}`)
+  const handleNavigate = (character: Character) => {
+    setSelectedCharacter(character)
+    navigate(`/character/${character.id}`)
   }
 
   return (
@@ -86,7 +90,7 @@ const Home: React.FC = () => {
           <div
             key={character.id}
             className={styles.characterCard}
-            onClick={() => handleNavigate(character.id)}
+            onClick={() => handleNavigate(character)}
           >
             <div className={styles.characterImageWrapper}>
               <img

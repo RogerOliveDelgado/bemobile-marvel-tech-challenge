@@ -4,11 +4,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './Header.module.css'
 
-interface HeaderProps {
-  loading: boolean
-}
-
-const Header: React.FC<HeaderProps> = () => {
+const Header: React.FC = () => {
   const navigate = useNavigate()
 
   return (

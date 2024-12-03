@@ -55,7 +55,7 @@
   margin: 0 auto;
   display: flex;
   overflow-x: auto;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 16px;
   padding: 8px;
   background-color: #fff;
@@ -67,6 +67,7 @@
 
 .comicsLayout::-webkit-scrollbar {
   height: 8px;
+  background-color: #ccc;
 }
 
 .comicsLayout::-webkit-scrollbar-thumb {
@@ -98,4 +99,22 @@
   font-weight: bold;
   color: #333;
   margin: 0;
+}
+
+/* Loading Bar */
+.loadingBar {
+  width: 0;
+  height: 4px;
+  background-color: red;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    width 5s ease-out,
+    opacity 5s ease-out;
+}
+
+.loadingBar.loading {
+  width: 100%;
+  opacity: 1;
+  visibility: visible;
 }
