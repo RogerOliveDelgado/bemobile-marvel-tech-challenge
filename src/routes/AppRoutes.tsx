@@ -1,7 +1,6 @@
 import Header from '@/layouts/Header'
 import comicsData from '@/mockData/comics.json'
-import CharacterDetail from '@/pages/CharacterDetail/CharacterDetail'
-import { Comic } from '@/pages/CharacterDetail/CharacterDetail'
+import CharacterDetail, { Comic } from '@/pages/CharacterDetail/CharacterDetail'
 import React from 'react'
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import Favorites from '../pages/Favorites/Favorites'

@@ -8,7 +8,7 @@ interface HeaderProps {
   loading: boolean
 }
 
-const Header: React.FC<HeaderProps> = ({ loading }) => {
+const Header: React.FC<HeaderProps> = () => {
   const navigate = useNavigate()
 
   return (
@@ -23,9 +23,6 @@ const Header: React.FC<HeaderProps> = ({ loading }) => {
         <img src={heartIcon} alt="Favorites" className={styles.heartIcon} />
         <span>3</span>
       </div>
-      <div
-        className={`${styles.loadingBar} ${loading ? styles.loading : ''}`}
-      />
     </header>
   )
 }
