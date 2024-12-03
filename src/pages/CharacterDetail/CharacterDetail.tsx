@@ -1,4 +1,7 @@
+import heartSelected from '@/assets/images/heart-selected.svg'
+import heartUnselected from '@/assets/images/heart-unselected.svg'
 import { useCharacter } from '@/contexts/CharacterContext'
+import { useFavorites } from '@/contexts/FavoritesContext'
 import { useFetch } from '@/hooks/useFetch'
 import React, { useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -27,6 +30,7 @@ const CharacterDetail: React.FC = () => {
   }, [selectedCharacter, navigate])
 
   const params = useMemo(() => ({ orderBy: 'onsaleDate', limit: 50 }), [])
+  const { isFavorite } = useFavorites()
 
   const {
     data: comicsData,
@@ -63,6 +67,11 @@ const CharacterDetail: React.FC = () => {
             {description || 'Description not available.'}
           </p>
         </div>
+        <img
+          src={
+            isFavorite(selectedCharacter.id) ? heartSelected : heartUnselected
+          }
+        />
       </div>
 
       <div className={styles.comicsSection}>

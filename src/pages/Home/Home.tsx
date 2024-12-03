@@ -1,6 +1,8 @@
-import heartIcon from '@/assets/images/heart-selected.svg'
+import heartSelected from '@/assets/images/heart-selected.svg'
+import heartUnselected from '@/assets/images/heart-unselected.svg'
 import SearchInput from '@/components/SearchInput/SearchInput'
 import { useCharacter } from '@/contexts/CharacterContext'
+import { useFavorites } from '@/contexts/FavoritesContext'
 import useDebounce from '@/hooks/useDebounce'
 import { useFetch } from '@/hooks/useFetch'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
@@ -32,6 +34,7 @@ const Home: React.FC = () => {
     () => ({ nameStartsWith: searchTerm, limit: 50 }),
     [searchTerm]
   )
+  const { toggleFavorite, isFavorite } = useFavorites()
 
   const {
     refetch: fetchSearchResults,
@@ -59,9 +62,13 @@ const Home: React.FC = () => {
     }
   }, [searchData])
 
-  const handleNavigate = (character: Character) => {
+  const handleNavigate = (character: Character) => () => {
     setSelectedCharacter(character)
     navigate(`/character/${character.id}`)
+  }
+
+  const handleAddFavorite = (character: Character) => () => {
+    toggleFavorite(character)
   }
 
   return (
@@ -87,12 +94,11 @@ const Home: React.FC = () => {
           ? searchResults
           : data?.data?.results || []
         ).map((character) => (
-          <div
-            key={character.id}
-            className={styles.characterCard}
-            onClick={() => handleNavigate(character)}
-          >
-            <div className={styles.characterImageWrapper}>
+          <div key={character.id} className={styles.characterCard}>
+            <div
+              className={styles.characterImageWrapper}
+              onClick={handleNavigate(character)}
+            >
               <img
                 src={`${character.thumbnail.path}.${character.thumbnail.extension}`}
                 alt={`${character.name} Thumbnail`}
@@ -105,9 +111,12 @@ const Home: React.FC = () => {
               <button
                 className={styles.favoriteButton}
                 aria-label="Add to favorites"
+                onClick={handleAddFavorite(character)}
               >
                 <img
-                  src={heartIcon}
+                  src={
+                    isFavorite(character.id) ? heartSelected : heartUnselected
+                  }
                   alt="Favorites"
                   className={styles.heartIcon}
                 />
