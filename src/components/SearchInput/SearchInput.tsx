@@ -1,12 +1,24 @@
 import searchIcon from '@/assets/images/search-button.svg'
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './SearchInput.module.css'
 
-interface MainLayoutProps {
+interface SearchInputProps {
   resultsLength: number
+  onInputChange: (query: string) => void
 }
 
-const MainLayout: React.FC<MainLayoutProps> = ({ resultsLength }) => {
+const SearchInput: React.FC<SearchInputProps> = ({
+  resultsLength,
+  onInputChange,
+}) => {
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    setSearchTerm(value)
+    onInputChange(value)
+  }
+
   return (
     <section className={styles.search} aria-labelledby="search-label">
       <form className={styles.searchInputWrapper}>
@@ -27,6 +39,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({ resultsLength }) => {
             className={styles.searchInput}
             type="text"
             placeholder="SEARCH A CHARACTER..."
+            value={searchTerm}
+            onChange={handleInputChange}
           />
         </label>
       </form>
@@ -35,4 +49,4 @@ const MainLayout: React.FC<MainLayoutProps> = ({ resultsLength }) => {
   )
 }
 
-export default MainLayout
+export default SearchInput
