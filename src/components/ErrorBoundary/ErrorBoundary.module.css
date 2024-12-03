@@ -1,0 +1,47 @@
+.errorBoundary {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  background-color: #000;
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+}
+
+.errorTitle {
+  font-size: 48px;
+  font-weight: bold;
+  color: #ff0000;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 5px #fff;
+}
+
+.errorMessage {
+  font-size: 18px;
+  color: #d1d1d1;
+  margin-bottom: 30px;
+}
+
+.errorImage {
+  width: 300px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.reloadButton {
+  background-color: #ff0000;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.reloadButton:hover {
+  background-color: #d10000;
+}
