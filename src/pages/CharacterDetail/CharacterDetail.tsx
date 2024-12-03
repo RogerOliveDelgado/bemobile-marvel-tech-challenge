@@ -40,7 +40,7 @@ const CharacterDetail: React.FC = () => {
     }
   }, [selectedCharacter, navigate])
 
-  const params = useMemo(() => ({ orderBy: 'onsaleDate', limit: 50 }), [])
+  const params = useMemo(() => ({ orderBy: 'onsaleDate', limit: 20 }), [])
   const { isFavorite } = useFavorites()
   const { toggleFavorite } = useFavorites()
 
