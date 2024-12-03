@@ -6,6 +6,8 @@
   padding: 12px 16px;
   background-color: #000;
   color: #fff;
+  z-index: 10;
+  position: relative;
 }
 
 .logo {
@@ -23,17 +25,7 @@
   cursor: pointer;
 }
 
-.loadingBar {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 0;
-  height: 4px;
-  background-color: red;
-  transition: width 0.2s ease-out;
-  z-index: 10;
-}
-
-.loadingBar.loading {
-  width: 100%;
+.heartIcon {
+  width: 24px;
+  height: 24px;
 }

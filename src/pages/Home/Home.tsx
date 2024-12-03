@@ -3,6 +3,7 @@ import heartUnselected from '@/assets/images/heart-unselected.svg'
 import SearchInput from '@/components/SearchInput/SearchInput'
 import { useCharacter } from '@/contexts/CharacterContext'
 import { useFavorites } from '@/contexts/FavoritesContext'
+import { useLoading } from '@/contexts/LoadingContext'
 import useDebounce from '@/hooks/useDebounce'
 import { useFetch } from '@/hooks/useFetch'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
@@ -23,7 +24,7 @@ const Home: React.FC = () => {
   const navigate = useNavigate()
 
   const params = useMemo(() => ({ orderBy: 'name', limit: 50 }), [])
-  const { data, loading, error } = useFetch<{
+  const { data, error } = useFetch<{
     data: { results: Character[] }
   }>('/characters', params)
 
@@ -35,12 +36,9 @@ const Home: React.FC = () => {
     [searchTerm]
   )
   const { toggleFavorite, isFavorite } = useFavorites()
+  const { isLoading } = useLoading()
 
-  const {
-    refetch: fetchSearchResults,
-    data: searchData,
-    loading: searchLoading,
-  } = useFetch<{
+  const { refetch: fetchSearchResults, data: searchData } = useFetch<{
     data: { results: Character[] }
   }>('/characters', searchParams, { autoFetch: false })
 
@@ -73,13 +71,7 @@ const Home: React.FC = () => {
 
   return (
     <div className={styles.home}>
-      <div
-        className={`${styles.loadingBar} ${
-          loading || searchLoading ? styles.loading : ''
-        }`}
-      ></div>
-
-      {!loading && data ? (
+      {!isLoading && data ? (
         <SearchInput
           resultsLength={
             searchResults.length || data?.data?.results.length || 0

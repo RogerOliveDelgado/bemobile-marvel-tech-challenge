@@ -1,9 +1,9 @@
 import marvelService from '@/api/marvelService'
+import { useLoading } from '@/contexts/LoadingContext'
 import { useCallback, useEffect, useState } from 'react'
 
 interface UseFetchResult<T> {
   data: T | null
-  loading: boolean
   error: string | null
   refetch: () => void
 }
@@ -18,11 +18,16 @@ export function useFetch<T>(
   { autoFetch = true }: UseFetchConfig = {}
 ): UseFetchResult<T> {
   const [data, setData] = useState<T | null>(null)
-  const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
+  const { setLoading } = useLoading()
+
+  const memoizedSetLoading = useCallback(
+    (state: boolean) => setLoading(state),
+    [setLoading]
+  )
 
   const fetchData = useCallback(async () => {
-    setLoading(true)
+    memoizedSetLoading(true)
     setError(null)
     try {
       const response = await marvelService.get<T>(endpoint, { params })
@@ -30,9 +35,9 @@ export function useFetch<T>(
     } catch (err: any) {
       setError(err?.message || 'Something went wrong')
     } finally {
-      setLoading(false)
+      memoizedSetLoading(false)
     }
-  }, [endpoint, params])
+  }, [endpoint, params, memoizedSetLoading])
 
   useEffect(() => {
     if (autoFetch) {
@@ -40,5 +45,5 @@ export function useFetch<T>(
     }
   }, [autoFetch, fetchData])
 
-  return { data, loading, error, refetch: fetchData }
+  return { data, error, refetch: fetchData }
 }

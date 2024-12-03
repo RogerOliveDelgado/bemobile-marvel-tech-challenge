@@ -2,6 +2,7 @@ import heartSelected from '@/assets/images/heart-selected.svg'
 import heartUnselected from '@/assets/images/heart-unselected.svg'
 import { useCharacter } from '@/contexts/CharacterContext'
 import { useFavorites } from '@/contexts/FavoritesContext'
+import { useLoading } from '@/contexts/LoadingContext'
 import { useFetch } from '@/hooks/useFetch'
 import React, { useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -19,6 +20,16 @@ export interface Comic {
   }[]
 }
 
+interface Character {
+  id: number
+  name: string
+  thumbnail: {
+    path: string
+    extension: string
+  }
+  description: string
+}
+
 const CharacterDetail: React.FC = () => {
   const navigate = useNavigate()
   const { selectedCharacter } = useCharacter()
@@ -31,12 +42,14 @@ const CharacterDetail: React.FC = () => {
 
   const params = useMemo(() => ({ orderBy: 'onsaleDate', limit: 50 }), [])
   const { isFavorite } = useFavorites()
+  const { toggleFavorite } = useFavorites()
 
-  const {
-    data: comicsData,
-    loading: comicsLoading,
-    error: comicsError,
-  } = useFetch<{
+  const handleToggle = (character: Character) => () => {
+    toggleFavorite(character)
+  }
+  const { isLoading } = useLoading()
+
+  const { data: comicsData, error: comicsError } = useFetch<{
     data: { results: Comic[] }
   }>(`/characters/${selectedCharacter?.id}/comics`, params)
 
@@ -48,13 +61,6 @@ const CharacterDetail: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      {/* Loading Bar */}
-      {comicsLoading && (
-        <div
-          className={`${styles.loadingBar} ${comicsLoading ? styles.loading : ''}`}
-        ></div>
-      )}
-
       <div className={styles.header}>
         <img
           src={`${thumbnail.path}.${thumbnail.extension}`}
@@ -68,6 +74,8 @@ const CharacterDetail: React.FC = () => {
           </p>
         </div>
         <img
+          className={styles.toggleHeart}
+          onClick={handleToggle(selectedCharacter)}
           src={
             isFavorite(selectedCharacter.id) ? heartSelected : heartUnselected
           }
@@ -76,7 +84,7 @@ const CharacterDetail: React.FC = () => {
 
       <div className={styles.comicsSection}>
         <h2 className={styles.comicsTitle}>COMICS</h2>
-        {comicsLoading ? (
+        {isLoading ? (
           <p>Loading comics...</p>
         ) : comicsError ? (
           <p>Error loading comics: {comicsError}</p>
