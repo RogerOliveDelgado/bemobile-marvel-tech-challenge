@@ -4,6 +4,7 @@ import { useCharacter } from '@/contexts/CharacterContext'
 import { useFavorites } from '@/contexts/FavoritesContext'
 import { useLoading } from '@/contexts/LoadingContext'
 import { useFetch } from '@/hooks/useFetch'
+import classNames from 'classnames'
 import React, { useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './CharacterDetail.module.css'
@@ -65,7 +66,14 @@ const CharacterDetail: React.FC = () => {
           />
           <div className={styles.characterInfo}>
             <section className={styles.characterHeader}>
-              <h1 className={styles.characterName}>{name}</h1>
+              <h1
+                className={classNames(
+                  styles.characterName,
+                  styles.truncateTitle
+                )}
+              >
+                {name}
+              </h1>
               <img
                 className={styles.toggleHeart}
                 onClick={() => toggleFavorite(selectedCharacter)}
@@ -77,7 +85,7 @@ const CharacterDetail: React.FC = () => {
                 alt="Favorite toggle"
               />
             </section>
-            <div className={styles.description}>
+            <div className={classNames(styles.description, styles.truncate5)}>
               <p>{description || 'Description not available.'}</p>
             </div>
           </div>
