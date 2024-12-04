@@ -1,3 +1,6 @@
+@import '@/assets/styles/global.css';
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;500;700&display=swap');
+
 :root {
   font-family: Inter, Roboto, 'Helvetica Neue', Avenir, Helvetica, Arial,
     sans-serif;

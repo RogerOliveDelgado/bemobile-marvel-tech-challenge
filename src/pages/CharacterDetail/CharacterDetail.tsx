@@ -41,12 +41,7 @@ const CharacterDetail: React.FC = () => {
   }, [selectedCharacter, navigate])
 
   const params = useMemo(() => ({ orderBy: 'onsaleDate', limit: 20 }), [])
-  const { isFavorite } = useFavorites()
-  const { toggleFavorite } = useFavorites()
-
-  const handleToggle = (character: Character) => () => {
-    toggleFavorite(character)
-  }
+  const { isFavorite, toggleFavorite } = useFavorites()
   const { isLoading } = useLoading()
 
   const { data: comicsData, error: comicsError } = useFetch<{
@@ -62,59 +57,72 @@ const CharacterDetail: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <img
-          src={`${thumbnail.path}.${thumbnail.extension}`}
-          alt={name || 'Character'}
-          className={styles.characterImage}
-        />
-        <div className={styles.characterInfo}>
-          <h1 className={styles.characterName}>{name}</h1>
-          <p className={styles.description}>
-            {description || 'Description not available.'}
-          </p>
+        <div className={styles.contentHeader}>
+          <img
+            src={`${thumbnail.path}.${thumbnail.extension}`}
+            alt={name || 'Character'}
+            className={styles.characterImage}
+          />
+          <div className={styles.characterInfo}>
+            <section className={styles.characterHeader}>
+              <h1 className={styles.characterName}>{name}</h1>
+              <img
+                className={styles.toggleHeart}
+                onClick={() => toggleFavorite(selectedCharacter)}
+                src={
+                  isFavorite(selectedCharacter.id)
+                    ? heartSelected
+                    : heartUnselected
+                }
+                alt="Favorite toggle"
+              />
+            </section>
+            <div className={styles.description}>
+              <p>{description || 'Description not available.'}</p>
+            </div>
+          </div>
         </div>
-        <img
-          className={styles.toggleHeart}
-          onClick={handleToggle(selectedCharacter)}
-          src={
-            isFavorite(selectedCharacter.id) ? heartSelected : heartUnselected
-          }
-        />
       </div>
 
       <div className={styles.comicsSection}>
-        <h2 className={styles.comicsTitle}>COMICS</h2>
-        {isLoading ? (
-          <p>Loading comics...</p>
-        ) : comicsError ? (
-          <p>Error loading comics: {comicsError}</p>
-        ) : comicsData?.data?.results.length === 0 ? (
-          <p className={styles.noComics}>
-            No comics available for this character.
-          </p>
-        ) : (
-          <div className={styles.comicsLayout}>
-            {comicsData?.data?.results.map((comic, id) => {
-              const onsaleDate = comic.dates.find(
-                (date) => date.type === 'onsaleDate'
-              )?.date
+        {comicsError && <p>Error loading comics: {comicsError}</p>}
+        {!isLoading &&
+          !comicsError &&
+          (comicsData?.data?.results?.length ?? 0) === 0 && (
+            <p className={styles.noComics}>
+              No comics available for this character.
+            </p>
+          )}
+        {!isLoading && !comicsError && comicsData?.data?.results && (
+          <div className={styles.comicsSectionContainer}>
+            <h2 className={styles.comicsTitle}>COMICS</h2>
+            <div className={`${styles.comicsLayout} `}>
+              {comicsData.data.results.map((comic, id) => {
+                const onsaleDate = comic.dates.find(
+                  (date) => date.type === 'onsaleDate'
+                )?.date
 
-              return (
-                <div key={id} className={styles.comicCard}>
-                  <img
-                    src={`${comic.thumbnail.path}.${comic.thumbnail.extension}`}
-                    alt={comic.title || 'Comic'}
-                    className={styles.comicImage}
-                  />
-                  <p className={styles.comicName}>
-                    {comic.title || 'Unknown Comic'}
-                  </p>
-                  <p className={styles.comicLaunchDate}>
-                    {onsaleDate ? onsaleDate.split('-')[0] : 'Unknown Year'}
-                  </p>
-                </div>
-              )
-            })}
+                return (
+                  <div key={id} className={styles.comicCard}>
+                    <div className={styles.imageContainer}>
+                      <img
+                        src={`${comic.thumbnail.path}.${comic.thumbnail.extension}`}
+                        alt={comic.title || 'Comic'}
+                        className={styles.comicImage}
+                      />
+                    </div>
+                    <section className={styles.comicInformation}>
+                      <p className={styles.comicName}>
+                        {comic.title || 'Unknown Comic'}
+                      </p>
+                      <p className={styles.comicLaunchDate}>
+                        {onsaleDate ? onsaleDate.split('-')[0] : 'Unknown Year'}
+                      </p>
+                    </section>
+                  </div>
+                )
+              })}
+            </div>
           </div>
         )}
       </div>

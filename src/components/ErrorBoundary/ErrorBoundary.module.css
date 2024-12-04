@@ -1,0 +1,47 @@
+.errorBoundary {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  background-color: #000;
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+}
+
+.errorTitle {
+  font-size: var(--xl-font-size);
+  font-weight: var(--lg-font-weight);
+  font-family: var(--font-primary);
+  color: var(--marvel-red);
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 5px var(--light-color);
+}
+
+.errorMessage {
+  font-size: 18px;
+  color: #d1d1d1;
+  margin-bottom: 30px;
+}
+
+.errorImage {
+  width: 300px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.reloadButton {
+  background-color: var(--marvel-red);
+  color: var(--light-color);
+  border: none;
+  padding: 10px 20px;
+  font-size: var(--md-font-size);
+  font-weight: var(--lg-font-weight);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.reloadButton:hover {
+  background-color: var(--marvel-red);
+}
