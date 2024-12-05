@@ -17,6 +17,7 @@
   /* Font sizes */
   --xl-font-size: 40px;
   --lg-font-size: 32px;
+  --ml-font-size: 24px;
   --md-font-size: 16px;
   --sm-font-size: 15.05px;
   --xs-font-size: 14px;
@@ -31,6 +32,7 @@
   /*Line height*/
   --xl-line-height: 46.88px;
   --lg-line-height: 37.5px;
+  --ml-line-height: 28.13px;
   --md-line-height: 18.75px;
   --mm-line-height: 17.63px;
   --sm-line-height: 16.41px;
