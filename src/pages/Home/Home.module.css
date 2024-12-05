@@ -1,0 +1,13 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  margin: var(--lg-margin);
+  gap: var(--md-gap);
+}
+
+.title {
+  font-weight: var(--lg-font-weight);
+  font-size: var(--lg-font-size);
+  line-height: var(--lg-font-height);
+  font-family: var(--font-primary);
+}

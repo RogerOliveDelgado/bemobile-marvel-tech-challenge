@@ -1,21 +1,31 @@
 import Header from '@/layouts/Header'
 import CharacterDetail from '@/pages/CharacterDetail/CharacterDetail'
+import Home from '@/pages/Home/Home'
 import React from 'react'
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
-import Favorites from '../pages/Favorites/Favorites'
-import Home from '../pages/Home/Home'
+import {
+  Outlet,
+  Route,
+  BrowserRouter as Router,
+  Routes,
+} from 'react-router-dom'
 
-const AppRoutes: React.FC = () => {
-  return (
-    <Router>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/favorites" element={<Favorites />} />
-        <Route path="/character/:id" element={<CharacterDetail />} />
-      </Routes>
-    </Router>
-  )
-}
+const Layout: React.FC = () => (
+  <>
+    <Header />
+    <Outlet />
+  </>
+)
+
+const AppRoutes: React.FC = () => (
+  <Router>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="favorites" element={<Home />} />
+        <Route path="character/:id" element={<CharacterDetail />} />
+      </Route>
+    </Routes>
+  </Router>
+)
 
 export default AppRoutes

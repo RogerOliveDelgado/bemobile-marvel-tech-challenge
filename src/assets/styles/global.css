@@ -43,9 +43,11 @@
   --lg-gap: 48px;
   --md-gap: 24px;
   --sm-gap: 16px;
+  --xs-gap: 12px;
   --lg-padding: 48px;
   --md-padding: 24px;
   --sm-padding: 16px;
+  --xs-padding: 12px;
   --lg-margin: 48px;
   --md-margin: 24px;
   --sm-margin: 16px;
@@ -58,6 +60,10 @@
 
   /* Slider */
   --slider-height: 4px;
+
+  /* Search Icon*/
+  --search-icon-width: 12px;
+  --search-icon-height: 12px;
 
   /* Card divider*/
   --card-divider-width: 5.38px;

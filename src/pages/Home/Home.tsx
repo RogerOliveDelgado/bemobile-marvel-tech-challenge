@@ -23,7 +23,7 @@ export interface Character {
 const Home: React.FC = () => {
   const navigate = useNavigate()
   const { setSelectedCharacter } = useCharacter()
-  const { toggleFavorite, isFavorite } = useFavorites()
+  const { favorites, toggleFavorite, isFavorite } = useFavorites()
   const { isLoading } = useLoading()
 
   const [searchTerm, setSearchTerm] = useState('')
@@ -34,6 +34,8 @@ const Home: React.FC = () => {
     '/characters',
     params
   )
+
+  const isFavoritesPage = location.pathname === '/favorites'
 
   const searchParams = useMemo(
     () => ({ nameStartsWith: searchTerm, limit: 50 }),
@@ -70,33 +72,40 @@ const Home: React.FC = () => {
     toggleFavorite(character)
   }
 
-  const charactersToDisplay =
-    searchResults.length > 0 ? searchResults : data?.data?.results || []
+  const charactersToDisplay = isFavoritesPage
+    ? favorites.filter((character: Character) =>
+        character.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : searchResults.length > 0
+      ? searchResults
+      : data?.data?.results || []
 
   return (
     <div className={styles.home}>
       {!isLoading && data && (
-        <SearchInput
-          resultsLength={charactersToDisplay.length}
-          onInputChange={(query: string) => setSearchTerm(query)}
-        />
-      )}
-
-      <div className={styles.dashboard}>
-        {error && <p>Error: {error}</p>}
-        <GridLayout
-          items={charactersToDisplay}
-          renderItem={(character: Character) => (
-            <Card
-              key={character.id}
-              character={character}
-              onNavigate={handleNavigate}
-              onAddFavorite={handleAddFavorite}
-              isFavorite={isFavorite}
+        <>
+          {isFavoritesPage && <h1 className={styles.title}>Favorites</h1>}
+          <SearchInput
+            resultsLength={charactersToDisplay.length}
+            onInputChange={(query: string) => setSearchTerm(query)}
+          />
+          <div className={styles.dashboard}>
+            {error && <p>Error: {error}</p>}
+            <GridLayout
+              items={charactersToDisplay}
+              renderItem={(character: Character) => (
+                <Card
+                  key={character.id}
+                  character={character}
+                  onNavigate={handleNavigate}
+                  onAddFavorite={handleAddFavorite}
+                  isFavorite={isFavorite}
+                />
+              )}
             />
-          )}
-        />
-      </div>
+          </div>
+        </>
+      )}
     </div>
   )
 }
