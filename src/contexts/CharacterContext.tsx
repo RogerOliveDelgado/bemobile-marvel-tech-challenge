@@ -1,4 +1,5 @@
 import { useFetch } from '@/hooks/useFetch'
+import useLocalStorage from '@/hooks/useLocalStorage'
 import { Character } from '@/pages/Home/Home'
 import React, {
   createContext,
@@ -32,6 +33,10 @@ export const CharacterProvider: React.FC<CharacterProviderProps> = ({
   )
   const [characters, setCharacters] = useState<Character[]>([])
   const [error, setError] = useState<string | null>(null)
+  const { setStoredValue } = useLocalStorage<Character[] | undefined>(
+    'character-list',
+    []
+  )
 
   const params = useMemo(() => ({ orderBy: 'name', limit: 50 }), [])
   const { data, error: fetchError } = useFetch<{
@@ -41,11 +46,12 @@ export const CharacterProvider: React.FC<CharacterProviderProps> = ({
   useEffect(() => {
     if (data?.data?.results) {
       setCharacters(data.data.results)
+      setStoredValue(data.data.results)
     }
     if (fetchError) {
       setError(fetchError)
     }
-  }, [data, fetchError])
+  }, [data, fetchError, setStoredValue])
 
   return (
     <CharacterContext.Provider
