@@ -1,0 +1,78 @@
+:root {
+  /* Screen dimensions */
+  --screen-width: 1512px;
+  --tablet-width: 960px;
+  --mobile-width: 480px;
+  --image-width: 320px;
+  --image-height: 320px;
+
+  /* Features width*/
+  --comic-desktop-width: 179.2px;
+  --comic-tablet-width: 168.53px;
+  --comic-mobile-width: 164px;
+
+  /* Font Style */
+  --font-primary: 'Roboto Condensed', sans-serif;
+
+  /* Font sizes */
+  --xl-font-size: 40px;
+  --lg-font-size: 32px;
+  --ml-font-size: 24px;
+  --md-font-size: 16px;
+  --sm-font-size: 15.05px;
+  --xs-font-size: 14px;
+  --xxs-font-size: 12px;
+  --xxxs-font-size: 11.29px;
+
+  /* Font weight */
+  --lg-font-weight: 700;
+  --md-font-weight: 500;
+  --sm-font-weight: 400;
+
+  /*Line height*/
+  --xl-line-height: 46.88px;
+  --lg-line-height: 37.5px;
+  --ml-line-height: 28.13px;
+  --md-line-height: 18.75px;
+  --mm-line-height: 17.63px;
+  --sm-line-height: 16.41px;
+  --xs-line-height: 14.06px;
+  --xxs-line-height: 13.22px;
+
+  /* Gaps, paddings, margins */
+  --lg-gap: 48px;
+  --md-gap: 24px;
+  --sm-gap: 16px;
+  --xs-gap: 12px;
+  --lg-padding: 48px;
+  --md-padding: 24px;
+  --sm-padding: 16px;
+  --xs-padding: 12px;
+  --lg-margin: 48px;
+  --md-margin: 24px;
+  --sm-margin: 16px;
+  --xs-margin: 8px;
+  --xxs-margin: 4px;
+
+  /*Logo Dimensions*/
+  --marvel-logo-height: 52px;
+  --marvel-logo-width: 130px;
+
+  /* Slider */
+  --slider-height: 4px;
+
+  /* Search Icon*/
+  --search-icon-width: 12px;
+  --search-icon-height: 12px;
+
+  /* Card divider*/
+  --card-divider-width: 5.38px;
+
+  /* Colors */
+  --text-color: #000000;
+  --grey-color: #333333;
+  --marvel-red: #ec1d24;
+  --dark-color: #000000;
+  --light-color: #ffffff;
+  --secondary-slider-color: #d9d9d9;
+}

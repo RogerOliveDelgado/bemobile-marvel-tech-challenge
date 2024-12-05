@@ -1,5 +1,5 @@
-import heartIcon from '@/assets/images/heart-selected.svg'
-import marvelLogo from '@/assets/images/marvel-logo.svg'
+import heartIcon from '@/assets/images/HeartSelected.min.svg'
+import marvelLogo from '@/assets/images/MarvelLogo.min.svg'
 import LoadingBar from '@/components/LoadingBar/LoadingBar'
 import { useFavorites } from '@/contexts/FavoritesContext'
 import React from 'react'

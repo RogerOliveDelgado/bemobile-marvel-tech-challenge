@@ -1,0 +1,110 @@
+.characterCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background: var(--light-color);
+  overflow: hidden;
+}
+
+.characterImageWrapper {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 228.89px;
+  cursor: pointer;
+}
+
+.characterImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.characterCardDivider {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: var(--marvel-red);
+  height: var(--card-divider-width);
+  border: none;
+  box-shadow: none;
+  width: 100%;
+  z-index: 1;
+}
+
+.characterInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+  padding: 12px;
+  text-align: center;
+  flex: 1;
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - 12.86px),
+    calc(100% - 12.86px) 100%,
+    0 100%
+  );
+  background: linear-gradient(
+    to top,
+    var(--dark-color) 50%,
+    var(--marvel-red) 50%
+  );
+  background-size: 100% 200%;
+  background-position: right bottom;
+  overflow: hidden;
+  border: none;
+  transition: background-position 0.5s ease-in-out;
+  color: var(--light-color); /* Ensure text color synchronizes with SVG */
+}
+
+.characterCard:hover .characterInfo {
+  background-position: right top;
+  /* color: var(--marvel-red); Synchronize text color with background */
+}
+
+.characterName {
+  font-size: 20px;
+  margin: 8px 0;
+  color: var(--light-color);
+}
+
+.favoriteButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  outline: none;
+}
+
+.favoriteButton:focus,
+.favoriteButton:active {
+  outline: none;
+  box-shadow: none;
+  border: none;
+}
+
+.heartIcon {
+  width: 24px;
+  height: 22px;
+  background: transparent;
+}
+
+.favorited {
+  color: var(--marvel-red);
+  transition:
+    background-color 0.3s ease-in,
+    filter 0.3s ease-out;
+}
+
+.characterCard:hover .favorited {
+  background-color: var(--light-color);
+  filter: brightness(0) invert(1);
+  background: transparent;
+}

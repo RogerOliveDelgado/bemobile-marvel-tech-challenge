@@ -3,18 +3,18 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
-  background-color: #000;
-  color: #fff;
+  padding: var(--sm-padding) var(--sm-padding);
+  background-color: var(--dark-color);
+  color: var(--light-color);
   z-index: 10;
   position: relative;
 }
 
 .logo {
-  font-size: 20px;
-  font-weight: bold;
   text-transform: uppercase;
   cursor: pointer;
+  width: var(--marvel-logo-width);
+  height: var(--marvel-logo-height);
 }
 
 .favorites-counter {
