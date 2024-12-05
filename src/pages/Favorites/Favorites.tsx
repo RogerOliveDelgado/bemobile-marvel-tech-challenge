@@ -1,19 +1,11 @@
+/* eslint-disable no-unused-vars */
 import heartSelected from '@/assets/images/heart-selected.svg'
 import heartUnselected from '@/assets/images/heart-unselected.svg'
 import { useFavorites } from '@/contexts/FavoritesContext'
+import type { Character } from '@/pages/Home/Home'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './Favorites.module.css'
-
-interface Character {
-  id: number
-  name: string
-  thumbnail: {
-    path: string
-    extension: string
-  }
-  description: string
-}
 
 const Favorites: React.FC = () => {
   const navigate = useNavigate()

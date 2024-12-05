@@ -1,5 +1,5 @@
-import heartSelected from '@/assets/images/heart-selected.svg'
-import heartUnselected from '@/assets/images/heart-unselected.svg'
+import Card from '@/components/Card/Card'
+import GridLayout from '@/components/Grid/GridLayout/GridLayout'
 import SearchInput from '@/components/SearchInput/SearchInput'
 import { useCharacter } from '@/contexts/CharacterContext'
 import { useFavorites } from '@/contexts/FavoritesContext'
@@ -10,7 +10,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './Home.module.css'
 
-interface Character {
+export interface Character {
   id: number
   name: string
   thumbnail: {
@@ -22,22 +22,23 @@ interface Character {
 
 const Home: React.FC = () => {
   const navigate = useNavigate()
-
-  const params = useMemo(() => ({ orderBy: 'name', limit: 50 }), [])
-  const { data, error } = useFetch<{
-    data: { results: Character[] }
-  }>('/characters', params)
-
   const { setSelectedCharacter } = useCharacter()
+  const { toggleFavorite, isFavorite } = useFavorites()
+  const { isLoading } = useLoading()
+
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState<Character[]>([])
+
+  const params = useMemo(() => ({ orderBy: 'name', limit: 50 }), [])
+  const { data, error } = useFetch<{ data: { results: Character[] } }>(
+    '/characters',
+    params
+  )
+
   const searchParams = useMemo(
     () => ({ nameStartsWith: searchTerm, limit: 50 }),
     [searchTerm]
   )
-  const { toggleFavorite, isFavorite } = useFavorites()
-  const { isLoading } = useLoading()
-
   const { refetch: fetchSearchResults, data: searchData } = useFetch<{
     data: { results: Character[] }
   }>('/characters', searchParams, { autoFetch: false })
@@ -60,62 +61,41 @@ const Home: React.FC = () => {
     }
   }, [searchData])
 
-  const handleNavigate = (character: Character) => () => {
+  const handleNavigate = (character: Character) => {
     setSelectedCharacter(character)
     navigate(`/character/${character.id}`)
   }
 
-  const handleAddFavorite = (character: Character) => () => {
+  const handleAddFavorite = (character: Character) => {
     toggleFavorite(character)
   }
 
+  const charactersToDisplay =
+    searchResults.length > 0 ? searchResults : data?.data?.results || []
+
   return (
     <div className={styles.home}>
-      {!isLoading && data ? (
+      {!isLoading && data && (
         <SearchInput
-          resultsLength={
-            searchResults.length || data?.data?.results.length || 0
-          }
+          resultsLength={charactersToDisplay.length}
           onInputChange={(query: string) => setSearchTerm(query)}
         />
-      ) : null}
+      )}
 
       <div className={styles.dashboard}>
         {error && <p>Error: {error}</p>}
-        {(searchResults.length > 0
-          ? searchResults
-          : data?.data?.results || []
-        ).map((character) => (
-          <div key={character.id} className={styles.characterCard}>
-            <div
-              className={styles.characterImageWrapper}
-              onClick={handleNavigate(character)}
-            >
-              <img
-                src={`${character.thumbnail.path}.${character.thumbnail.extension}`}
-                alt={`${character.name} Thumbnail`}
-                className={styles.characterImage}
-              />
-            </div>
-            <div className={styles.characterCardDivider}></div>
-            <div className={styles.characterInfo}>
-              <p className={styles.characterName}>{character.name}</p>
-              <button
-                className={styles.favoriteButton}
-                aria-label="Add to favorites"
-                onClick={handleAddFavorite(character)}
-              >
-                <img
-                  src={
-                    isFavorite(character.id) ? heartSelected : heartUnselected
-                  }
-                  alt="Favorites"
-                  className={styles.heartIcon}
-                />
-              </button>
-            </div>
-          </div>
-        ))}
+        <GridLayout
+          items={charactersToDisplay}
+          renderItem={(character: Character) => (
+            <Card
+              key={character.id}
+              character={character}
+              onNavigate={handleNavigate}
+              onAddFavorite={handleAddFavorite}
+              isFavorite={isFavorite}
+            />
+          )}
+        />
       </div>
     </div>
   )

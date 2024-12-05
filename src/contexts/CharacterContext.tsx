@@ -1,14 +1,5 @@
+import { type Character } from '@/pages/Home/Home'
 import React, { createContext, ReactNode, useContext, useState } from 'react'
-
-interface Character {
-  id: number
-  name: string
-  description: string
-  thumbnail: {
-    path: string
-    extension: string
-  }
-}
 
 interface CharacterContextType {
   selectedCharacter: Character | null

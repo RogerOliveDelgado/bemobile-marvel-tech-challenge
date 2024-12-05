@@ -21,16 +21,6 @@ export interface Comic {
   }[]
 }
 
-interface Character {
-  id: number
-  name: string
-  thumbnail: {
-    path: string
-    extension: string
-  }
-  description: string
-}
-
 const CharacterDetail: React.FC = () => {
   const navigate = useNavigate()
   const { selectedCharacter } = useCharacter()

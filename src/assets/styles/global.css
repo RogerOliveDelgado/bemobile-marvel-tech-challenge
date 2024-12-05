@@ -57,6 +57,9 @@
   /* Slider */
   --slider-height: 4px;
 
+  /* Card divider*/
+  --card-divider-width: 5.38px;
+
   /* Colors */
   --text-color: #000000;
   --grey-color: #333333;
