@@ -1,5 +1,5 @@
-import heartSelected from '@/assets/images/heart-selected.svg'
-import heartUnselected from '@/assets/images/heart-unselected.svg'
+import heartSelected from '@/assets/images/HeartSelected.min.svg'
+import heartUnselected from '@/assets/images/HeartUnselected.min.svg'
 import { useCharacter } from '@/contexts/CharacterContext'
 import { useFavorites } from '@/contexts/FavoritesContext'
 import { useLoading } from '@/contexts/LoadingContext'

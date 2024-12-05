@@ -2,11 +2,8 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  background: #fff;
+  background: var(--light-color);
   overflow: hidden;
-  transition:
-    transform 0.2s,
-    box-shadow 0.2s;
 }
 
 .characterImageWrapper {
@@ -25,10 +22,15 @@
 }
 
 .characterCardDivider {
+  position: absolute;
+  bottom: 0;
+  left: 0;
   background-color: var(--marvel-red);
-  height: var(--card-divivder-width);
+  height: var(--card-divider-width);
+  border: none;
+  box-shadow: none;
   width: 100%;
-  margin: 0;
+  z-index: 1;
 }
 
 .characterInfo {
@@ -49,15 +51,28 @@
     0 100%,
     0 100%
   );
-  background-color: #000;
+  background: linear-gradient(
+    to top,
+    var(--dark-color) 50%,
+    var(--marvel-red) 50%
+  );
+  background-size: 100% 200%;
+  background-position: right bottom;
   overflow: hidden;
   border: none;
+  transition: background-position 0.5s ease-in-out;
+  color: var(--light-color); /* Ensure text color synchronizes with SVG */
+}
+
+.characterCard:hover .characterInfo {
+  background-position: right top;
+  /* color: var(--marvel-red); Synchronize text color with background */
 }
 
 .characterName {
   font-size: 20px;
-  color: white;
   margin: 8px 0;
+  color: var(--light-color);
 }
 
 .favoriteButton {
@@ -79,12 +94,20 @@
 }
 
 .heartIcon {
-  width: 20px;
-  height: 20px;
-  /* fill: #ff0000; */
-  transition: transform 0.2s;
+  width: 24px;
+  height: 22px;
+  background: transparent;
 }
 
-.favoriteButton:hover .heartIcon {
-  transform: scale(1.2);
+.favorited {
+  color: var(--marvel-red);
+  transition:
+    background-color 0.3s ease-in,
+    filter 0.3s ease-out;
+}
+
+.characterCard:hover .favorited {
+  background-color: var(--light-color);
+  filter: brightness(0) invert(1);
+  background: transparent;
 }

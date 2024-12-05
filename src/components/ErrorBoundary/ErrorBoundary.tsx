@@ -1,4 +1,4 @@
-import spidermanErrorGif from '@/assets/images/spiderman-error.gif'
+import spidermanErrorGif from '@/assets/gif/spiderman-error.gif'
 import React, { Component, ReactNode } from 'react'
 import styles from './ErrorBoundary.module.css'
 
