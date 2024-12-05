@@ -5,9 +5,8 @@ import { useCharacter } from '@/contexts/CharacterContext'
 import { useFavorites } from '@/contexts/FavoritesContext'
 import { useLoading } from '@/contexts/LoadingContext'
 import useDebounce from '@/hooks/useDebounce'
-import { useFetch } from '@/hooks/useFetch'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useCallback, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import styles from './Home.module.css'
 
 export interface Character {
@@ -22,46 +21,30 @@ export interface Character {
 
 const Home: React.FC = () => {
   const navigate = useNavigate()
-  const { setSelectedCharacter } = useCharacter()
+  const location = useLocation()
+  const { setSelectedCharacter, characters, error } = useCharacter()
   const { favorites, toggleFavorite, isFavorite } = useFavorites()
   const { isLoading } = useLoading()
 
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState<Character[]>([])
 
-  const params = useMemo(() => ({ orderBy: 'name', limit: 50 }), [])
-  const { data, error } = useFetch<{ data: { results: Character[] } }>(
-    '/characters',
-    params
-  )
-
   const isFavoritesPage = location.pathname === '/favorites'
-
-  const searchParams = useMemo(
-    () => ({ nameStartsWith: searchTerm, limit: 50 }),
-    [searchTerm]
-  )
-  const { refetch: fetchSearchResults, data: searchData } = useFetch<{
-    data: { results: Character[] }
-  }>('/characters', searchParams, { autoFetch: false })
 
   useDebounce(
     searchTerm,
     1000,
     useCallback(() => {
       if (searchTerm) {
-        fetchSearchResults()
+        const filteredResults = characters.filter((character) =>
+          character.name.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+        setSearchResults(filteredResults)
       } else {
         setSearchResults([])
       }
-    }, [searchTerm, fetchSearchResults])
+    }, [searchTerm, characters])
   )
-
-  useEffect(() => {
-    if (searchData?.data?.results) {
-      setSearchResults(searchData.data.results)
-    }
-  }, [searchData])
 
   const handleNavigate = (character: Character) => {
     setSelectedCharacter(character)
@@ -73,16 +56,16 @@ const Home: React.FC = () => {
   }
 
   const charactersToDisplay = isFavoritesPage
-    ? favorites.filter((character: Character) =>
+    ? favorites.filter((character) =>
         character.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
     : searchResults.length > 0
       ? searchResults
-      : data?.data?.results || []
+      : characters
 
   return (
     <div className={styles.home}>
-      {!isLoading && data && (
+      {!isLoading && (
         <>
           {isFavoritesPage && <h1 className={styles.title}>Favorites</h1>}
           <SearchInput

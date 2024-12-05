@@ -10,13 +10,13 @@ import { LoadingProvider } from './contexts/LoadingContext.tsx'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ErrorBoundary>
-      <FavoritesProvider>
-        <CharacterProvider>
-          <LoadingProvider>
+      <LoadingProvider>
+        <FavoritesProvider>
+          <CharacterProvider>
             <App />
-          </LoadingProvider>
-        </CharacterProvider>
-      </FavoritesProvider>
+          </CharacterProvider>
+        </FavoritesProvider>
+      </LoadingProvider>
     </ErrorBoundary>
   </StrictMode>
 )
