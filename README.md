@@ -1,7 +1,7 @@
 
 # Marvel Tech Challenge
 
-This repository contains a web application developed as part of a technical challenge. The application is built using modern web technologies, focusing on responsive design, clean architecture, and maintainable code.
+This repository contains a web application developed as part of a technical challenge. The application is built using modern web technologies, focusing on responsive design, clean architecture, and maintainable code. The application interacts with Marvel API, allowing the user to get information about its favorites Marvel characters.
 
 ## Table of Contents
 
@@ -21,8 +21,9 @@ This repository contains a web application developed as part of a technical chal
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org) (v16 or later)
-- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
+- [React](https://react.dev/) (v17 or later)
+- [npm](https://www.npmjs.com/)
+- CSS. Any component external library has been used to design components.
 
 ### Installation
 
@@ -69,15 +70,14 @@ src/
 │   └── styles/
 │
 ├── components/           # Reusable components
-│   ├── Button/
-│   │   ├── Button.tsx
-│   │   ├── Button.test.tsx
-│   │   └── Button.module.css
 │   ├── Card/
+│   │   ├── Card.tsx
+│   │   ├── Card.test.tsx
+│   │   └── Card.module.css
 │   ├── ErrorBoundary/
 │   ├── FailingComponent/
 │   ├── Grid/
-│   │   ├── GridLayout.tsx
+│   │   ├── GridLayout/
 │   ├── LoadingBar/
 │   └── SearchInput/
 │
@@ -91,15 +91,16 @@ src/
 │   ├── useFetch.ts
 │   └── useLocalStorage.ts
 │
-├── layouts/              # Layout structures (Header, Footer, MainLayout)
+├── layouts/              # Layout structures (Header, MainLayout)
 │   ├── Header.tsx
-│   └── MainLayout.tsx
+|   ├── Header.module.css
+│   ├── MainLayout.tsx
+|   └── MainLayout.module.css
 │
 ├── pages/                # Main application pages
 │   ├── CharacterDetail/
 │   ├── Favorites/
 │   ├── Home/
-│   └── Routes/
 │
 ├── routes/               # Routing and navigation
 │   ├── AppRoutes.tsx
@@ -120,7 +121,7 @@ src/
 ## Technologies Used
 
 - **Frontend Framework**: React
-- **State Management**: Context API (or Redux, optionally)
+- **State Management**: Context API
 - **Styling**: CSS Modules with CSS variables for theme management
 - **HTTP Client**: Axios
 - **Testing**: Jest, React Testing Library
@@ -146,7 +147,7 @@ src/
 
 The application is deployed on [Vercel](https://vercel.com). You can access the live demo here:
 
-[Live Application](https://your-project-name.vercel.app)
+[Live Application](https://bemobile-marvel-tech-challenge.vercel.app/)
 
 ---
 
