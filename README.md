@@ -39,6 +39,7 @@ This repository contains a web application developed as part of a technical chal
    ```bash
    npm install
    ```
+3. Set environmental variables (.env). Follow .env.example format
 
 3. Start the development server:
 
