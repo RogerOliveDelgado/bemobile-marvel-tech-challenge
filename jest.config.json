@@ -1,0 +1,15 @@
+{
+  "preset": "ts-jest",
+  "testEnvironment": "jsdom",
+  "moduleNameMapper": {
+    "^@/(.*)$": "<rootDir>/src/$1"
+  },
+  "transform": {
+    "^.+\\.[tj]sx?$": "ts-jest"
+  },
+  "setupFilesAfterEnv": ["<rootDir>/jest.setup.ts"],
+  "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
+  "testMatch": ["**/?(*.)+(spec|test).[tj]s?(x)"],
+  "collectCoverageFrom": ["src/**/*.{ts,tsx,js,jsx}", "!src/**/*.d.ts"],
+  "coverageDirectory": "coverage"
+}
