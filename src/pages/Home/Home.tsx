@@ -1,11 +1,13 @@
 import Card from '@/components/Card/Card'
+import ErrorDisplay from '@/components/FailingComponent/ErrorDisplay'
 import GridLayout from '@/components/Grid/GridLayout/GridLayout'
 import SearchInput from '@/components/SearchInput/SearchInput'
 import { useCharacter } from '@/contexts/CharacterContext'
 import { useFavorites } from '@/contexts/FavoritesContext'
 import { useLoading } from '@/contexts/LoadingContext'
 import useDebounce from '@/hooks/useDebounce'
-import React, { useCallback, useState } from 'react'
+import { useFetch } from '@/hooks/useFetch'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import styles from './Home.module.css'
 
@@ -22,7 +24,11 @@ export interface Character {
 const Home: React.FC = () => {
   const navigate = useNavigate()
   const location = useLocation()
-  const { setSelectedCharacter, characters, error } = useCharacter()
+  const {
+    setSelectedCharacter,
+    characters,
+    error: characterError,
+  } = useCharacter()
   const { favorites, toggleFavorite, isFavorite } = useFavorites()
   const { isLoading } = useLoading()
 
@@ -31,20 +37,43 @@ const Home: React.FC = () => {
 
   const isFavoritesPage = location.pathname === '/favorites'
 
+  const searchParams = useMemo(
+    () => ({
+      nameStartsWith: searchTerm,
+      limit: 50,
+    }),
+    [searchTerm]
+  )
+
+  const {
+    refetch: fetchSearchResults,
+    data: searchData,
+    error: searchError,
+  } = useFetch<{ data: { results: Character[] } }>(
+    '/characters',
+    searchParams,
+    {
+      autoFetch: false,
+    }
+  )
+
   useDebounce(
     searchTerm,
     1000,
     useCallback(() => {
       if (searchTerm) {
-        const filteredResults = characters.filter((character) =>
-          character.name.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-        setSearchResults(filteredResults)
+        fetchSearchResults()
       } else {
         setSearchResults([])
       }
-    }, [searchTerm, characters])
+    }, [searchTerm, fetchSearchResults])
   )
+
+  useEffect(() => {
+    if (searchData?.data?.results) {
+      setSearchResults(searchData.data.results)
+    }
+  }, [searchData])
 
   const handleNavigate = (character: Character) => {
     setSelectedCharacter(character)
@@ -73,7 +102,9 @@ const Home: React.FC = () => {
             onInputChange={(query: string) => setSearchTerm(query)}
           />
           <div className={styles.dashboard}>
-            {error && <p>Error: {error}</p>}
+            {(characterError || searchError) && (
+              <ErrorDisplay resourceName="characters" />
+            )}
             <GridLayout
               items={charactersToDisplay}
               renderItem={(character: Character) => (
