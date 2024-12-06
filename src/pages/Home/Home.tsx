@@ -5,9 +5,7 @@ import SearchInput from '@/components/SearchInput/SearchInput'
 import { useCharacter } from '@/contexts/CharacterContext'
 import { useFavorites } from '@/contexts/FavoritesContext'
 import { useLoading } from '@/contexts/LoadingContext'
-import useDebounce from '@/hooks/useDebounce'
-import { useFetch } from '@/hooks/useFetch'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import styles from './Home.module.css'
 
@@ -22,75 +20,24 @@ export interface Character {
 }
 
 const Home: React.FC = () => {
+  const { dispatch, characters, error } = useCharacter()
+  const { toggleFavorite, isFavorite, favorites } = useFavorites()
+  const { isLoading } = useLoading()
   const navigate = useNavigate()
   const location = useLocation()
-  const {
-    setSelectedCharacter,
-    characters,
-    error: characterError,
-  } = useCharacter()
-  const { favorites, toggleFavorite, isFavorite } = useFavorites()
-  const { isLoading } = useLoading()
-
-  const [searchTerm, setSearchTerm] = useState('')
-  const [searchResults, setSearchResults] = useState<Character[]>([])
 
   const isFavoritesPage = location.pathname === '/favorites'
 
-  const searchParams = useMemo(
-    () => ({
-      nameStartsWith: searchTerm,
-      limit: 50,
-    }),
-    [searchTerm]
-  )
-
-  const {
-    refetch: fetchSearchResults,
-    data: searchData,
-    error: searchError,
-  } = useFetch<{ data: { results: Character[] } }>(
-    '/characters',
-    searchParams,
-    {
-      autoFetch: false,
-    }
-  )
-
-  useDebounce(
-    searchTerm,
-    1000,
-    useCallback(() => {
-      if (searchTerm) {
-        fetchSearchResults()
-      } else {
-        setSearchResults([])
-      }
-    }, [searchTerm, fetchSearchResults])
-  )
-
-  useEffect(() => {
-    if (searchData?.data?.results) {
-      setSearchResults(searchData.data.results)
-    }
-  }, [searchData])
+  const handleSearchInput = (query: string) => {
+    dispatch({ type: 'SET_SEARCH_TERM', payload: query })
+  }
 
   const handleNavigate = (character: Character) => {
-    setSelectedCharacter(character)
+    dispatch({ type: 'SET_SELECTED_CHARACTER', payload: character })
     navigate(`/character/${character.id}`)
   }
 
-  const handleAddFavorite = (character: Character) => {
-    toggleFavorite(character)
-  }
-
-  const charactersToDisplay = isFavoritesPage
-    ? favorites.filter((character) =>
-        character.name.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    : searchResults.length > 0
-      ? searchResults
-      : characters
+  const charactersToDisplay = isFavoritesPage ? favorites : characters
 
   return (
     <div className={styles.home}>
@@ -99,20 +46,18 @@ const Home: React.FC = () => {
           {isFavoritesPage && <h1 className={styles.title}>Favorites</h1>}
           <SearchInput
             resultsLength={charactersToDisplay.length}
-            onInputChange={(query: string) => setSearchTerm(query)}
+            onInputChange={handleSearchInput}
           />
           <div className={styles.dashboard}>
-            {(characterError || searchError) && (
-              <ErrorDisplay resourceName="characters" />
-            )}
+            {error && <ErrorDisplay resourceName="characters" />}
             <GridLayout
               items={charactersToDisplay}
-              renderItem={(character: Character) => (
+              renderItem={(character) => (
                 <Card
                   key={character.id}
                   character={character}
                   onNavigate={handleNavigate}
-                  onAddFavorite={handleAddFavorite}
+                  onAddFavorite={toggleFavorite}
                   isFavorite={isFavorite}
                 />
               )}
