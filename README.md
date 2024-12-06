@@ -49,7 +49,7 @@ This repository contains a web application developed as part of a technical chal
 4. Open the application in your browser:
 
    ```
-   http://localhost:3000
+   http://localhost:5173
    ```
 
 ---
@@ -171,8 +171,12 @@ The design is based on Figma wireframes, ensuring a clean and modern UI. It foll
 
 ## Screenshots
 
-![Home Page](./screenshots/home.png)
-![Character Detail](./screenshots/character-detail.png)
+![Home Page](https://github.com/user-attachments/assets/cc76532a-7803-4d83-bc88-0f855d1f913d)
+![Character Detail](https://github.com/user-attachments/assets/b9c17361-cd47-48b5-884e-f21d368e4db1)
+![Tablet design](https://github.com/user-attachments/assets/82b3aa48-bbe4-41f5-8f23-93047eb856c8)
+![Mobile design](https://github.com/user-attachments/assets/616cbbbe-fea0-4e4f-96a6-1f57c6bd4b6f)
+
+
 
 ---
 
