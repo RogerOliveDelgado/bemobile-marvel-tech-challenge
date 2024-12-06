@@ -67,7 +67,9 @@ src/
 ├── assets/               # Static resources (images, fonts, etc.)
 │   ├── images/
 │   ├── fonts/
+|   ├── gif/
 │   └── styles/
+|       └── global.css    # Contains global variables for parametric CSS styles 
 │
 ├── components/           # Reusable components
 │   ├── Card/
@@ -88,8 +90,10 @@ src/
 │
 ├── hooks/                # Custom hooks
 │   ├── useDebounce.ts
+|   ├── useDebounce.test.tsx
 │   ├── useFetch.ts
-│   └── useLocalStorage.ts
+|   ├── useLocalStorage.ts 
+│   └── useLocalStorage.test.tsx
 │
 ├── layouts/              # Layout structures (Header, MainLayout)
 │   ├── Header.tsx
@@ -121,6 +125,7 @@ src/
 ## Technologies Used
 
 - **Frontend Framework**: React
+- **Languages**: Javascript, Typescript
 - **State Management**: Context API
 - **Styling**: CSS Modules with CSS variables for theme management
 - **HTTP Client**: Axios
@@ -175,7 +180,6 @@ The design is based on Figma wireframes, ensuring a clean and modern UI. It foll
 ![Character Detail](https://github.com/user-attachments/assets/66e44abe-9353-4baf-9048-6727d97c807b)
 ![Tablet design](https://github.com/user-attachments/assets/82b3aa48-bbe4-41f5-8f23-93047eb856c8)
 ![Mobile design](https://github.com/user-attachments/assets/616cbbbe-fea0-4e4f-96a6-1f57c6bd4b6f)
-
 
 
 ---
