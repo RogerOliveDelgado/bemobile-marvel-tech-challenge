@@ -177,10 +177,9 @@ The design is based on Figma wireframes, ensuring a clean and modern UI. It foll
 ## Screenshots
 
 ![Home Page](https://github.com/user-attachments/assets/cc76532a-7803-4d83-bc88-0f855d1f913d)
-![Character Detail](https://github.com/user-attachments/assets/66e44abe-9353-4baf-9048-6727d97c807b)
+![Character Detail](https://github.com/user-attachments/assets/8598d767-2d9d-46ac-9a66-12d1682aaccc)
 ![Tablet design](https://github.com/user-attachments/assets/82b3aa48-bbe4-41f5-8f23-93047eb856c8)
 ![Mobile design](https://github.com/user-attachments/assets/616cbbbe-fea0-4e4f-96a6-1f57c6bd4b6f)
-
 
 ---
 
