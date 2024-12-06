@@ -1,51 +1,180 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Marvel Tech Challenge
 
-Currently, two official plugins are available:
+This repository contains a web application developed as part of a technical challenge. The application is built using modern web technologies, focusing on responsive design, clean architecture, and maintainable code.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Table of Contents
 
-## Expanding the ESLint configuration
+- [Getting Started](#getting-started)
+- [Project Structure](#project-structure)
+- [Technologies Used](#technologies-used)
+- [Features](#features)
+- [Deployment](#deployment)
+- [Testing](#testing)
+- [Design](#design)
+- [Screenshots](#screenshots)
+- [License](#license)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+---
 
-- Configure the top-level `parserOptions` property like this:
+## Getting Started
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### Prerequisites
+
+- [Node.js](https://nodejs.org) (v16 or later)
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/your-username/marvel-tech-challenge.git
+   cd marvel-tech-challenge
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+4. Open the application in your browser:
+
+   ```
+   http://localhost:3000
+   ```
+
+---
+
+## Project Structure
+
+The project follows a modular structure for scalability and maintainability. Below is an overview:
+
+```plaintext
+src/
+│
+├── api/                  # HTTP requests and API services
+│   └── marvelService.ts
+│
+├── assets/               # Static resources (images, fonts, etc.)
+│   ├── images/
+│   ├── fonts/
+│   └── styles/
+│
+├── components/           # Reusable components
+│   ├── Button/
+│   │   ├── Button.tsx
+│   │   ├── Button.test.tsx
+│   │   └── Button.module.css
+│   ├── Card/
+│   ├── ErrorBoundary/
+│   ├── FailingComponent/
+│   ├── Grid/
+│   │   ├── GridLayout.tsx
+│   ├── LoadingBar/
+│   └── SearchInput/
+│
+├── contexts/             # Contexts for global state management
+│   ├── CharacterContext.tsx
+│   ├── FavoritesContext.tsx
+│   └── LoadingContext.tsx
+│
+├── hooks/                # Custom hooks
+│   ├── useDebounce.ts
+│   ├── useFetch.ts
+│   └── useLocalStorage.ts
+│
+├── layouts/              # Layout structures (Header, Footer, MainLayout)
+│   ├── Header.tsx
+│   └── MainLayout.tsx
+│
+├── pages/                # Main application pages
+│   ├── CharacterDetail/
+│   ├── Favorites/
+│   ├── Home/
+│   └── Routes/
+│
+├── routes/               # Routing and navigation
+│   ├── AppRoutes.tsx
+│   └── PrivateRoute.tsx
+│
+├── utils/                # Utilities and helper functions
+│   ├── constants.ts
+│   ├── helpers.ts
+│   └── validations.ts
+│
+├── App.tsx               # Root component
+├── main.tsx              # Entry point (renders App)
+└── tsconfig.json         # TypeScript configuration
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+---
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Technologies Used
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+- **Frontend Framework**: React
+- **State Management**: Context API (or Redux, optionally)
+- **Styling**: CSS Modules with CSS variables for theme management
+- **HTTP Client**: Axios
+- **Testing**: Jest, React Testing Library
+- **Code Quality**: Prettier, ESLint
+- **Deployment**: Vercel
+- **Design Reference**: Figma
+
+---
+
+## Features
+
+- Responsive Design
+- API Integration with Marvel's database
+- Favorites Management
+- Character Detail Views
+- Custom Hooks for API calls, local storage, and debouncing
+- Error Boundaries for better UX
+- Unit Tests for components and hooks
+
+---
+
+## Deployment
+
+The application is deployed on [Vercel](https://vercel.com). You can access the live demo here:
+
+[Live Application](https://your-project-name.vercel.app)
+
+---
+
+## Testing
+
+Unit tests are implemented for critical components and custom hooks using Jest and React Testing Library.
+
+Run tests with:
+
+```bash
+npm test
 ```
-# bemobile-marvel-tech-challenge
+
+---
+
+## Design
+
+The design is based on Figma wireframes, ensuring a clean and modern UI. It follows a component-based structure for reusability and consistency.
+
+---
+
+## Screenshots
+
+![Home Page](./screenshots/home.png)
+![Character Detail](./screenshots/character-detail.png)
+
+---
+
+## License
+
+This project is licensed under the MIT License.
