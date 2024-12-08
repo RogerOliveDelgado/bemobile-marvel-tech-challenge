@@ -65,8 +65,12 @@
   --search-icon-width: 12px;
   --search-icon-height: 12px;
 
-  /* Card divider*/
+  /* Card */
   --card-divider-width: 5.38px;
+  --card-image-height: 189.97px;
+  --card-max-width: 188.5px;
+  --card-min-width: 172.5px;
+  --card-title-width: 108px;
 
   /* Colors */
   --text-color: #000000;

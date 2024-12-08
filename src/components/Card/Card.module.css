@@ -1,24 +1,25 @@
 .characterCard {
+  width: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  background: var(--light-color);
-  overflow: hidden;
+  align-items: center;
 }
 
 .characterImageWrapper {
-  position: relative;
-  overflow: hidden;
   width: 100%;
-  height: 228.89px;
-  cursor: pointer;
+  height: 189.97px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
 .characterImage {
-  width: 100%;
   height: 100%;
+  width: 100%;
   object-fit: cover;
-  display: block;
 }
 
 .characterCardDivider {
@@ -30,15 +31,18 @@
   border: none;
   box-shadow: none;
   width: 100%;
-  z-index: 1;
+  z-index: 10;
 }
 
 .characterInfo {
+  box-sizing: border-box;
   display: flex;
+  width: 100%;
   justify-content: space-between;
   align-items: center;
-  height: 40px;
-  padding: 12px;
+  height: auto;
+  padding: var(--sm-padding) var(--sm-padding) var(--sm-padding)
+    var(--sm-padding);
   text-align: center;
   flex: 1;
   clip-path: polygon(
@@ -58,18 +62,20 @@
   overflow: hidden;
   border: none;
   transition: background-position 0.5s ease-in-out;
-  color: var(--light-color); /* Ensure text color synchronizes with SVG */
 }
 
 .characterCard:hover .characterInfo {
   background-position: right top;
-  /* color: var(--marvel-red); Synchronize text color with background */
 }
 
 .characterName {
-  font-size: 20px;
-  margin: 8px 0;
+  width: var(--card-title-width);
+  font-size: var(--md-font-size);
   color: var(--light-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
 }
 
 .favoriteButton {
@@ -79,7 +85,6 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  padding: 8px;
   outline: none;
 }
 

@@ -11,3 +11,9 @@
   line-height: var(--lg-font-height);
   font-family: var(--font-primary);
 }
+
+@media (max-width: 480px) {
+  .home {
+    margin: var(--sm-margin);
+  }
+}

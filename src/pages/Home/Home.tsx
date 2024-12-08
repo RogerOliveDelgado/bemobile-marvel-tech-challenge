@@ -48,21 +48,19 @@ const Home: React.FC = () => {
             resultsLength={charactersToDisplay.length}
             onInputChange={handleSearchInput}
           />
-          <div className={styles.dashboard}>
-            {error && <ErrorDisplay resourceName="characters" />}
-            <GridLayout
-              items={charactersToDisplay}
-              renderItem={(character) => (
-                <Card
-                  key={character.id}
-                  character={character}
-                  onNavigate={handleNavigate}
-                  onAddFavorite={toggleFavorite}
-                  isFavorite={isFavorite}
-                />
-              )}
-            />
-          </div>
+          {error && <ErrorDisplay resourceName="characters" />}
+          <GridLayout
+            items={charactersToDisplay}
+            renderItem={(character) => (
+              <Card
+                key={character.id}
+                character={character}
+                onNavigate={handleNavigate}
+                onAddFavorite={toggleFavorite}
+                isFavorite={isFavorite}
+              />
+            )}
+          />
         </>
       )}
     </div>
