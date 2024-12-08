@@ -1,6 +1,7 @@
 .gridContainer {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(var(--card-min-width), 1fr));
   gap: var(--sm-gap);
   width: 100%;
+  justify-content: center;
+  align-content: start;
 }
