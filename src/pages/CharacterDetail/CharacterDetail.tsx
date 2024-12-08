@@ -51,12 +51,14 @@ const CharacterDetail: React.FC = () => {
         <div className={styles.contentHeader}>
           <img
             src={`${thumbnail.path}.${thumbnail.extension}`}
+            title={name || 'Character'}
             alt={name || 'Character'}
             className={styles.characterImage}
           />
           <div className={styles.characterInfo}>
             <section className={styles.characterHeader}>
               <h1
+                title={name}
                 className={classNames(
                   styles.characterName,
                   styles.truncateCharacterName
@@ -66,6 +68,11 @@ const CharacterDetail: React.FC = () => {
               </h1>
               <img
                 className={styles.toggleHeart}
+                title={
+                  isFavorite(selectedCharacter.id)
+                    ? 'Remove from favorites'
+                    : 'Add to favorites'
+                }
                 onClick={() => toggleFavorite(selectedCharacter)}
                 src={
                   isFavorite(selectedCharacter.id)
@@ -76,7 +83,9 @@ const CharacterDetail: React.FC = () => {
               />
             </section>
             <div className={classNames(styles.description, styles.truncate5)}>
-              <p>{description || 'Description not available.'}</p>
+              <p title={description}>
+                {description || 'Description not available.'}
+              </p>
             </div>
           </div>
         </div>
@@ -105,6 +114,7 @@ const CharacterDetail: React.FC = () => {
                     <div className={styles.imageContainer}>
                       <img
                         src={`${comic.thumbnail.path}.${comic.thumbnail.extension}`}
+                        title={comic.title || 'Comic'}
                         alt={comic.title || 'Comic'}
                         className={styles.comicImage}
                       />
