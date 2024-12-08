@@ -29,3 +29,9 @@
   width: 24px;
   height: 24px;
 }
+
+@media (max-width: 480px) {
+  .header {
+    padding: var(--sm-padding) var(--sm-padding);
+  }
+}
