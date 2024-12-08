@@ -35,6 +35,7 @@
 .characterHeader {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
 }
 
@@ -45,15 +46,6 @@
   text-overflow: ellipsis;
   -webkit-line-clamp: 5;
   line-clamp: 5;
-}
-
-.truncateTitle {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  -webkit-line-clamp: 1;
-  line-clamp: 1;
 }
 
 .characterInfo {
@@ -68,8 +60,12 @@
 .characterName {
   font-size: var(--xl-font-size);
   font-weight: var(--lg-font-weight);
-  line-height: var(--xs-line-height);
+  line-height: var(--xl-line-height);
   color: var(--light-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
 }
 
 .description {

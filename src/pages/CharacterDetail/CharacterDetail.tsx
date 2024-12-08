@@ -56,14 +56,7 @@ const CharacterDetail: React.FC = () => {
           />
           <div className={styles.characterInfo}>
             <section className={styles.characterHeader}>
-              <h1
-                className={classNames(
-                  styles.characterName,
-                  styles.truncateTitle
-                )}
-              >
-                {name}
-              </h1>
+              <h1 className={styles.characterName}>{name}</h1>
               <img
                 className={styles.toggleHeart}
                 onClick={() => toggleFavorite(selectedCharacter)}
