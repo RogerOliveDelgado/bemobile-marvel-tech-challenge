@@ -3,7 +3,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: var(--sm-padding) var(--sm-padding);
+  padding: var(--sm-padding) var(--lg-padding);
   background-color: var(--dark-color);
   color: var(--light-color);
   z-index: 10;
