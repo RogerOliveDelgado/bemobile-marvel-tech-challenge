@@ -18,6 +18,7 @@ const Header: React.FC = () => {
         <img
           src={marvelLogo}
           alt="Marvel Logo"
+          title="Main Page"
           className={styles.logo}
           onClick={() => {
             navigate('/')
@@ -28,7 +29,12 @@ const Header: React.FC = () => {
           className={styles.favoritesCounter}
           onClick={() => navigate('/favorites')}
         >
-          <img src={heartIcon} alt="Favorites" className={styles.heartIcon} />
+          <img
+            src={heartIcon}
+            title="Favorites"
+            alt="Favorites"
+            className={styles.heartIcon}
+          />
           <span>{favorites.length}</span>
         </div>
       </header>

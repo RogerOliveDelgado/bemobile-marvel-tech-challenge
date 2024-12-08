@@ -80,12 +80,15 @@ export const CharacterProvider: React.FC<CharacterProviderProps> = ({
   children,
 }) => {
   const [state, dispatch] = useReducer(characterReducer, initialState)
-  const { setStoredValue } = useLocalStorage<Character[]>('character-list', [])
+  const { storedValue, setStoredValue } = useLocalStorage<Character[]>(
+    'character-list',
+    []
+  )
 
   const params = useMemo(() => ({ orderBy: 'name', limit: 50 }), [])
   const { data, error: fetchError } = useFetch<{
     data: { results: Character[] }
-  }>('/characters', params)
+  }>('/characters', params, { autoFetch: !storedValue?.length })
 
   const searchParams = useMemo(() => {
     return state.searchTerm
@@ -118,23 +121,28 @@ export const CharacterProvider: React.FC<CharacterProviderProps> = ({
   )
 
   useEffect(() => {
-    if (data?.data?.results) {
-      if (!state.initialCharacters) {
-        dispatch({ type: 'SET_INITIAL_CHARACTERS', payload: data.data.results })
-      }
+    if (storedValue?.length) {
+      dispatch({ type: 'SET_INITIAL_CHARACTERS', payload: storedValue })
+      dispatch({ type: 'SET_CHARACTERS', payload: storedValue })
+    }
+  }, [storedValue])
+
+  useEffect(() => {
+    if (data?.data?.results && !storedValue?.length) {
+      dispatch({ type: 'SET_INITIAL_CHARACTERS', payload: data.data.results })
       dispatch({ type: 'SET_CHARACTERS', payload: data.data.results })
       setStoredValue(data.data.results)
     }
     if (fetchError) {
       dispatch({ type: 'SET_ERROR', payload: fetchError })
     }
-  }, [data, fetchError, setStoredValue, state.initialCharacters])
+  }, [data, fetchError, setStoredValue, storedValue])
 
   useEffect(() => {
     if (searchData?.data?.results) {
       dispatch({ type: 'SET_CHARACTERS', payload: searchData.data.results })
     } else if (searchData?.data?.results?.length === 0) {
-      dispatch({ type: 'SET_CHARACTERS', payload: [] }) // Show empty when no results
+      dispatch({ type: 'SET_CHARACTERS', payload: [] })
     }
     if (searchError) {
       dispatch({ type: 'SET_ERROR', payload: searchError })

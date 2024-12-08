@@ -1,5 +1,12 @@
+import useLocalStorage from '@/hooks/useLocalStorage'
 import { type Character } from '@/pages/Home/Home'
-import React, { createContext, ReactNode, useContext, useState } from 'react'
+import React, {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
 
 interface FavoritesContextType {
   favorites: Character[]
@@ -18,7 +25,15 @@ const FavoritesContext = createContext<FavoritesContextType | undefined>(
 export const FavoritesProvider: React.FC<CharacterProviderProps> = ({
   children,
 }) => {
-  const [favorites, setFavorites] = useState<Character[]>([])
+  const { storedValue, setStoredValue } = useLocalStorage<Character[]>(
+    'favorites',
+    []
+  )
+  const [favorites, setFavorites] = useState<Character[]>(storedValue || [])
+
+  useEffect(() => {
+    setStoredValue(favorites)
+  }, [favorites, setStoredValue])
 
   const toggleFavorite = (character: Character) => {
     setFavorites((prev) => {

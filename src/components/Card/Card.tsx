@@ -25,13 +25,19 @@ const Card: React.FC<CardProps> = ({
       >
         <img
           src={`${character.thumbnail.path}.${character.thumbnail.extension}`}
-          alt={`${character.name} Thumbnail`}
+          title={character.name || 'Character'}
+          alt={character.name || 'Character'}
           className={styles.characterImage}
         />
         <hr className={styles.characterCardDivider} />
       </figure>
       <section className={styles.characterInfo}>
-        <h2 className={styles.characterName}>{character.name}</h2>
+        <h2
+          title={character.name || 'Character'}
+          className={styles.characterName}
+        >
+          {character.name}
+        </h2>
         <button
           className={styles.favoriteButton}
           aria-label="Add to favorites"
@@ -40,6 +46,11 @@ const Card: React.FC<CardProps> = ({
           <img
             src={isFavorite(character.id) ? heartSelected : heartUnselected}
             alt="Favorites"
+            title={
+              isFavorite(character.id)
+                ? 'Remove from favorites'
+                : 'Add to favorites'
+            }
             className={`${styles.heartIcon} ${isFavorite(character.id) ? styles.favorited : ''}`}
           />
         </button>

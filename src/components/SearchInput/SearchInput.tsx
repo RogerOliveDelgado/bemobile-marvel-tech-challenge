@@ -24,6 +24,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
       <form className={styles.searchInputWrapper}>
         <label
           id="search-label"
+          title="Search character"
           className={styles.searchLabel}
           htmlFor="search-input"
         >
