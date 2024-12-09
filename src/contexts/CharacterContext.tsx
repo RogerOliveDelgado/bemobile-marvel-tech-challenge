@@ -1,6 +1,7 @@
 import useDebounce from '@/hooks/useDebounce'
 import { useFetch } from '@/hooks/useFetch'
 import useLocalStorage from '@/hooks/useLocalStorage'
+import { Comic } from '@/pages/CharacterDetail/CharacterDetail'
 import { Character } from '@/pages/Home/Home'
 import React, {
   createContext,
@@ -18,16 +19,22 @@ interface CharacterState {
   characters: Character[]
   searchResults: Character[]
   searchTerm: string
+  comics: Comic[]
+  isLoadingCharacters: boolean
+  isLoadingComics: boolean
   error: string | null
 }
 
 type CharacterAction =
-  | { type: 'SET_INITIAL_CHARACTERS'; payload: Character[] | null }
+  | { type: 'SET_INITIAL_CHARACTERS'; payload: Character[] }
   | { type: 'SET_SELECTED_CHARACTER'; payload: Character | null }
   | { type: 'SET_CHARACTERS'; payload: Character[] }
   | { type: 'RESET_CHARACTERS' }
   | { type: 'SET_SEARCH_RESULTS'; payload: Character[] }
   | { type: 'SET_SEARCH_TERM'; payload: string }
+  | { type: 'SET_COMICS'; payload: Comic[] }
+  | { type: 'SET_LOADING_CHARACTERS'; payload: boolean }
+  | { type: 'SET_LOADING_COMICS'; payload: boolean }
   | { type: 'SET_ERROR'; payload: string | null }
 
 const initialState: CharacterState = {
@@ -36,6 +43,9 @@ const initialState: CharacterState = {
   characters: [],
   searchResults: [],
   searchTerm: '',
+  comics: [],
+  isLoadingCharacters: false,
+  isLoadingComics: false,
   error: null,
 }
 
@@ -57,6 +67,12 @@ function characterReducer(
       return { ...state, searchResults: action.payload }
     case 'SET_SEARCH_TERM':
       return { ...state, searchTerm: action.payload }
+    case 'SET_COMICS':
+      return { ...state, comics: action.payload }
+    case 'SET_LOADING_CHARACTERS':
+      return { ...state, isLoadingCharacters: action.payload }
+    case 'SET_LOADING_COMICS':
+      return { ...state, isLoadingComics: action.payload }
     case 'SET_ERROR':
       return { ...state, error: action.payload }
     default:
@@ -64,17 +80,18 @@ function characterReducer(
   }
 }
 
-interface CharacterContextValue extends CharacterState {
-  dispatch: React.Dispatch<CharacterAction>
-}
-
-const CharacterContext = createContext<CharacterContextValue | undefined>(
-  undefined
-)
-
 interface CharacterProviderProps {
   children: ReactNode
 }
+
+const CharacterContext = createContext<
+  | (CharacterState & {
+      dispatch: React.Dispatch<CharacterAction>
+      refetchComics: () => void
+      updateFetch: (newEndpoint: string, newParams?: object) => void
+    })
+  | undefined
+>(undefined)
 
 export const CharacterProvider: React.FC<CharacterProviderProps> = ({
   children,
@@ -84,79 +101,101 @@ export const CharacterProvider: React.FC<CharacterProviderProps> = ({
     'character-list',
     []
   )
+  const { storedValue: storedComics, setStoredValue: setStoredComics } =
+    useLocalStorage<{ [key: string]: Comic[] }>('comics', {})
 
   const params = useMemo(() => ({ orderBy: 'name', limit: 50 }), [])
-  const { data, error: fetchError } = useFetch<{
+  const {
+    data: characterData,
+    refetch: refetchCharacters,
+    isLoading: isLoadingCharacters,
+  } = useFetch<{
     data: { results: Character[] }
-  }>('/characters', params, { autoFetch: !storedValue?.length })
-
-  const searchParams = useMemo(() => {
-    return state.searchTerm
-      ? { nameStartsWith: state.searchTerm, limit: 50 }
-      : { orderBy: 'name', limit: 50 }
-  }, [state.searchTerm])
+  }>('/characters', params, { autoFetch: !storedValue.length })
 
   const {
-    refetch: fetchSearchResults,
-    data: searchData,
-    error: searchError,
-  } = useFetch<{ data: { results: Character[] } }>(
+    data: comicsData,
+    refetch: refetchComics,
+    isLoading: isLoadingComics,
+    error: comicsError,
+    updateFetch,
+  } = useFetch<{ data: { results: Comic[] } }>(
     '/characters',
-    searchParams,
-    {
-      autoFetch: false,
-    }
+    { orderBy: 'onsaleDate', limit: 20 },
+    { autoFetch: false }
   )
+
+  useEffect(() => {
+    if (!state.selectedCharacter) return
+    if (storedComics[state.selectedCharacter.id]) {
+      dispatch({
+        type: 'SET_COMICS',
+        payload: storedComics[state.selectedCharacter.id],
+      })
+    }
+    if (comicsData?.data?.results) {
+      dispatch({ type: 'SET_COMICS', payload: comicsData.data.results })
+      setStoredComics((prev) => ({
+        ...prev,
+        [state.selectedCharacter!.id]: comicsData.data.results,
+      }))
+    }
+  }, [comicsData, setStoredComics, state, storedComics])
+
+  // useEffect(() => {
+  //   if (!state.selectedCharacter) return
+  //   updateFetch()
+  // }, [state.selectedCharacter])
 
   useDebounce(
     state.searchTerm,
     1000,
     useCallback(() => {
       if (state.searchTerm) {
-        fetchSearchResults()
+        refetchCharacters()
       } else {
         dispatch({ type: 'RESET_CHARACTERS' })
       }
-    }, [state.searchTerm, fetchSearchResults])
+    }, [state.searchTerm, refetchCharacters])
   )
 
   useEffect(() => {
     if (storedValue?.length) {
       dispatch({ type: 'SET_INITIAL_CHARACTERS', payload: storedValue })
       dispatch({ type: 'SET_CHARACTERS', payload: storedValue })
+    } else if (characterData?.data?.results) {
+      dispatch({
+        type: 'SET_INITIAL_CHARACTERS',
+        payload: characterData.data.results,
+      })
+      dispatch({ type: 'SET_CHARACTERS', payload: characterData.data.results })
+      setStoredValue(characterData.data.results)
     }
-  }, [storedValue])
+  }, [storedValue, characterData, setStoredValue])
 
   useEffect(() => {
-    if (data?.data?.results && !storedValue?.length) {
-      dispatch({ type: 'SET_INITIAL_CHARACTERS', payload: data.data.results })
-      dispatch({ type: 'SET_CHARACTERS', payload: data.data.results })
-      setStoredValue(data.data.results)
+    if (comicsError) {
+      dispatch({ type: 'SET_ERROR', payload: comicsError })
     }
-    if (fetchError) {
-      dispatch({ type: 'SET_ERROR', payload: fetchError })
-    }
-  }, [data, fetchError, setStoredValue, storedValue])
-
-  useEffect(() => {
-    if (searchData?.data?.results) {
-      dispatch({ type: 'SET_CHARACTERS', payload: searchData.data.results })
-    } else if (searchData?.data?.results?.length === 0) {
-      dispatch({ type: 'SET_CHARACTERS', payload: [] })
-    }
-    if (searchError) {
-      dispatch({ type: 'SET_ERROR', payload: searchError })
-    }
-  }, [searchData, searchError])
+  }, [comicsError])
 
   return (
-    <CharacterContext.Provider value={{ ...state, dispatch }}>
+    <CharacterContext.Provider
+      value={{
+        ...state,
+        updateFetch,
+        refetchComics,
+        dispatch,
+        isLoadingCharacters,
+        isLoadingComics,
+      }}
+    >
       {children}
     </CharacterContext.Provider>
   )
 }
 
-export const useCharacter = (): CharacterContextValue => {
+export const useCharacter = () => {
   const context = useContext(CharacterContext)
   if (!context) {
     throw new Error('useCharacter must be used within a CharacterProvider')

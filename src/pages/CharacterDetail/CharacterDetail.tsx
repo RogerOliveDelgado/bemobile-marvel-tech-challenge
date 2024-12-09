@@ -3,10 +3,9 @@ import heartUnselected from '@/assets/images/HeartUnselected.min.svg'
 import { useCharacter } from '@/contexts/CharacterContext'
 import { useFavorites } from '@/contexts/FavoritesContext'
 import { useLoading } from '@/contexts/LoadingContext'
-import { useFetch } from '@/hooks/useFetch'
 import classNames from 'classnames'
-import React, { useEffect, useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import styles from './CharacterDetail.module.css'
 
 export interface Comic {
@@ -22,24 +21,35 @@ export interface Comic {
 }
 
 const CharacterDetail: React.FC = () => {
-  const navigate = useNavigate()
-  const { selectedCharacter } = useCharacter()
+  const { id } = useParams<{ id: string }>()
+  const {
+    selectedCharacter,
+    updateFetch,
+    refetchComics,
+    isLoadingComics,
+    isLoadingCharacters,
+  } = useCharacter()
 
   useEffect(() => {
     if (!selectedCharacter) {
-      navigate('/')
+      
     }
   }, [selectedCharacter, navigate])
 
-  const params = useMemo(() => ({ orderBy: 'onsaleDate', limit: 20 }), [])
+  // const params = useMemo(() => ({ orderBy: 'onsaleDate', limit: 20 }), [])
   const { isFavorite, toggleFavorite } = useFavorites()
   const { isLoading } = useLoading()
 
-  const { data: comicsData, error: comicsError } = useFetch<{
-    data: { results: Comic[] }
-  }>(`/characters/${selectedCharacter?.id}/comics`, params)
+  // const { data: comicsData, error: comicsError } = useFetch<{
+  //   data: { results: Comic[] }
+  // }>(`/characters/${selectedCharacter?.id}/comics`, params)
 
-  if (!selectedCharacter) {
+  useEffect(() => {
+    updateComicsFetch(`/characters/${id}/comics`)
+    refetchComics()
+  }, [refetchComics, id, updateFetch])
+
+  if (!isLoadingCharacters) {
     return <p>Loading character...</p>
   }
 
