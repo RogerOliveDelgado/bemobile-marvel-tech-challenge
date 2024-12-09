@@ -22,19 +22,13 @@ export interface Comic {
 
 const CharacterDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>()
-  const {
-    selectedCharacter,
-    updateFetch,
-    refetchComics,
-    isLoadingComics,
-    isLoadingCharacters,
-  } = useCharacter()
+  const { selectedCharacter, updateFetch, refetchComics, isLoadingCharacters } =
+    useCharacter()
 
   useEffect(() => {
     if (!selectedCharacter) {
-      
     }
-  }, [selectedCharacter, navigate])
+  }, [selectedCharacter])
 
   // const params = useMemo(() => ({ orderBy: 'onsaleDate', limit: 20 }), [])
   const { isFavorite, toggleFavorite } = useFavorites()
@@ -45,7 +39,7 @@ const CharacterDetail: React.FC = () => {
   // }>(`/characters/${selectedCharacter?.id}/comics`, params)
 
   useEffect(() => {
-    updateComicsFetch(`/characters/${id}/comics`)
+    updateFetch(`/characters/${id}/comics`)
     refetchComics()
   }, [refetchComics, id, updateFetch])
 
