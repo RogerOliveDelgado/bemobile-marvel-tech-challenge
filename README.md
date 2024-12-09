@@ -198,7 +198,7 @@ To improve the Application's functionality, the effort will be focuses on scalin
     - Load more characters initially and add pagination
     - Load more information appart from comics
 - Add login/singup functionality
-- Add caché memory to deal with already requested information from the API
+- Add cache memory to deal with already requested information from the API
 - Add virtualization to improve performance on Main's Page
 - Add Lazy Loading when the size of the App grows considerably
 
