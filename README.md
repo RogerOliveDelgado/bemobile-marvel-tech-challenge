@@ -13,6 +13,7 @@ This repository contains a web application developed as part of a technical chal
 - [Testing](#testing)
 - [Design](#design)
 - [Screenshots](#screenshots)
+- [Future Steps](#future-steps)
 - [License](#license)
 
 ---
@@ -139,13 +140,14 @@ src/
 
 ## Features
 
-- Responsive Design
+- Responsive Design for Desktop, Tablet and Mobile
 - API Integration with Marvel's database
 - Favorites Management
 - Character Detail Views
-- Custom Hooks for API calls, local storage, and debouncing
+- Custom Hooks for API calls, local storage, debouncing and grid calculation
 - Error Boundaries for better UX
 - Unit Tests for components and hooks
+- Accessibility elements for better UX
 
 ---
 
@@ -184,6 +186,21 @@ The design is based on Figma wireframes, ensuring a clean and modern UI. It foll
 ![Tablet design](https://github.com/user-attachments/assets/a8ea9d22-4135-4be8-8ae4-3ff217f315a4)
 
 ![Mobile design](https://github.com/user-attachments/assets/616cbbbe-fea0-4e4f-96a6-1f57c6bd4b6f)
+
+---
+
+## Future Steps
+
+To improve the Application's functionality, the effort will be focuses on scaling it by:
+
+- Adding external libraries for requests management to allow more complex functionality or improve current custom hooks
+- Adding more resources for the user:
+    - Load more characters initially and add pagination
+    - Load more information appart from comics
+- Add login/singup functionality
+- Add caché memory to deal with already requested information from the API
+- Add virtualization to improve performance on Main's Page
+- Add Lazy Loading when the size of the App grows considerably
 
 ---
 
