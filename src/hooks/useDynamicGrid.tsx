@@ -4,8 +4,7 @@ import useDebounce from './useDebounce'
 function useDynamicGrid(
   containerRef: React.RefObject<HTMLDivElement>,
   minWidth: number,
-  gap: number,
-  delay = 150
+  gap: number
 ) {
   const [columns, setColumns] = useState(1)
   const previousWidthRef = useRef(0)
