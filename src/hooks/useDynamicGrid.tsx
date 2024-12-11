@@ -23,16 +23,6 @@ function useDynamicGrid(
     [gap, minWidth]
   )
 
-  useDebounce(
-    containerRef.current?.offsetWidth || 0,
-    delay,
-    (debouncedWidth) => {
-      if (debouncedWidth) {
-        calculateColumns(debouncedWidth)
-      }
-    }
-  )
-
   useEffect(() => {
     const handleResize = () => {
       if (containerRef.current) {
