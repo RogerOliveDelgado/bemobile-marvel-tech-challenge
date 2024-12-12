@@ -11,13 +11,19 @@ const ErrorDisplay: React.FC<ErrorDisplayProps> = ({
   resourceName = 'data',
 }) => {
   return (
-    <div className={styles.errorContainer}>
-      <img src={SpidermanGif} alt="Error" className={styles.errorImage} />
-      <h1 className={styles.errorTitle}>Oops! Something went wrong.</h1>
-      <p className={styles.errorMessage}>
+    <section className={styles.errorDisplay}>
+      <img
+        src={SpidermanGif}
+        alt="Error illustration"
+        className={styles.errorDisplay__image}
+      />
+      <h1 className={styles.errorDisplay__title}>
+        Oops! Something went wrong.
+      </h1>
+      <p className={styles.errorDisplay__message}>
         {`We couldn't load the ${resourceName}. Please reload the page.`}
       </p>
-    </div>
+    </section>
   )
 }
 

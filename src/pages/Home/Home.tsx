@@ -1,5 +1,5 @@
 import Card from '@/components/Card/Card'
-import ErrorDisplay from '@/components/FailingComponent/ErrorDisplay'
+import ErrorDisplay from '@/components/ErrorDisplay/ErrorDisplay'
 import GridLayout from '@/components/Grid/GridLayout/GridLayout'
 import SearchInput from '@/components/SearchInput/SearchInput'
 import { useCharacter } from '@/contexts/CharacterContext'
@@ -40,10 +40,12 @@ const Home: React.FC = () => {
   const charactersToDisplay = isFavoritesPage ? favorites : characters
 
   return (
-    <div className={styles.home}>
+    <div className={styles['home']}>
       {!isLoading && (
         <>
-          {isFavoritesPage && <h1 className={styles.title}>Favorites</h1>}
+          {isFavoritesPage && (
+            <h1 className={styles['home__title']}>Favorites</h1>
+          )}
           <SearchInput
             resultsLength={charactersToDisplay.length}
             onInputChange={handleSearchInput}

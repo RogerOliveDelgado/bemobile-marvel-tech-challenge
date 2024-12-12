@@ -18,40 +18,41 @@ const Card: React.FC<CardProps> = ({
   isFavorite,
 }) => {
   return (
-    <article className={styles.characterCard}>
-      <figure
-        className={styles.characterImageWrapper}
+    <article className={styles.card}>
+      <div
+        className={styles.card__imageWrapper}
         onClick={() => onNavigate(character)}
       >
         <img
           src={`${character.thumbnail.path}.${character.thumbnail.extension}`}
           title={character.name || 'Character'}
           alt={character.name || 'Character'}
-          className={styles.characterImage}
+          className={styles.card__image}
         />
-        <hr className={styles.characterCardDivider} />
-      </figure>
-      <section className={styles.characterInfo}>
-        <h2
-          title={character.name || 'Character'}
-          className={styles.characterName}
-        >
+        <hr className={styles.card__divider} />
+      </div>
+      <section className={styles.card__info}>
+        <h2 title={character.name || 'Character'} className={styles.card__name}>
           {character.name}
         </h2>
         <button
-          className={styles.favoriteButton}
-          aria-label="Add to favorites"
+          className={styles.card__favoriteButton}
+          aria-label={
+            isFavorite(character.id)
+              ? 'Remove from favorites'
+              : 'Add to favorites'
+          }
           onClick={() => onAddFavorite(character)}
         >
           <img
             src={isFavorite(character.id) ? heartSelected : heartUnselected}
-            alt="Favorites"
+            alt={isFavorite(character.id) ? 'Favorited' : 'Not Favorited'}
             title={
               isFavorite(character.id)
                 ? 'Remove from favorites'
                 : 'Add to favorites'
             }
-            className={`${styles.heartIcon} ${isFavorite(character.id) ? styles.favorited : ''}`}
+            className={`${styles.card__icon} ${isFavorite(character.id) ? styles['card__icon--favorited'] : ''}`}
           />
         </button>
       </section>

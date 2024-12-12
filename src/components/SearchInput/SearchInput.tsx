@@ -21,23 +21,23 @@ const SearchInput: React.FC<SearchInputProps> = ({
 
   return (
     <section className={styles.search} aria-labelledby="search-label">
-      <form className={styles.searchInputWrapper}>
+      <form className={styles.search__inputWrapper}>
         <label
           id="search-label"
           title="Search character"
-          className={styles.searchLabel}
+          className={styles.search__label}
           htmlFor="search-input"
         >
-          <div className={styles.searchIcon}>
+          <div className={styles.search__icon}>
             <img
               src={searchIcon}
               alt="Search Icon"
-              className={styles.searchIconSvg}
+              className={styles.search__iconSvg}
             />
           </div>
           <input
             id="search-input"
-            className={styles.searchInput}
+            className={styles.search__input}
             type="text"
             placeholder="SEARCH A CHARACTER..."
             value={searchTerm}
@@ -45,7 +45,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
           />
         </label>
       </form>
-      <p className={styles.searchResults}>{resultsLength} RESULTS</p>
+      <p className={styles.search__results}>{resultsLength} RESULTS</p>
     </section>
   )
 }

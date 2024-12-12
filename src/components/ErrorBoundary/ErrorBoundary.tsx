@@ -38,16 +38,21 @@ export class ErrorBoundary extends Component<
         <div className={styles.errorBoundary}>
           <img
             src={spidermanErrorGif}
-            alt="Spider-Man Error GIF"
-            className={styles.errorImage}
+            alt="Spider-Man Error"
+            className={styles.errorBoundary__image}
           />
-          <h1 className={styles.errorTitle}>Oops! Something went wrong.</h1>
-          <p className={styles.errorMessage}>
+          <h1 className={styles.errorBoundary__title}>
+            Oops! Something went wrong.
+          </h1>
+          <p className={styles.errorBoundary__message}>
             {
               "We're sorry for the inconvenience. Please try reloading the page or return to the home page."
             }
           </p>
-          <button className={styles.reloadButton} onClick={this.handleReload}>
+          <button
+            className={styles.errorBoundary__button}
+            onClick={this.handleReload}
+          >
             Reload
           </button>
         </div>

@@ -1,4 +1,6 @@
 .header {
+  position: relative;
+  z-index: 10;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -6,28 +8,30 @@
   padding: var(--sm-padding) var(--lg-padding);
   background-color: var(--dark-color);
   color: var(--light-color);
-  z-index: 10;
-  position: relative;
 }
 
-.logo {
-  text-transform: uppercase;
-  cursor: pointer;
+.header__logo {
   width: var(--marvel-logo-width);
   height: var(--marvel-logo-height);
-}
-
-.favorites-counter {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 16px;
+  text-transform: uppercase;
   cursor: pointer;
 }
 
-.heartIcon {
+.header__favoritesCounter {
+  display: flex;
+  align-items: center;
+  gap: var(--xxs-gap);
+  padding: var(--xxs-padding);
+  font-family: var(--font-primary);
+  font-size: var(--md-font-size);
+  font-weight: var(--xs-font-weight);
+  line-height: var(--md-line-height);
+  cursor: pointer;
+}
+
+.header__heartIcon {
   width: 24px;
-  height: 24px;
+  height: 21.68px;
 }
 
 @media (max-width: 480px) {

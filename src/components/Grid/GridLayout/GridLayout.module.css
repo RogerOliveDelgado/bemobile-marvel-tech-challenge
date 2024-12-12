@@ -1,7 +1,7 @@
 .gridContainer {
   display: grid;
-  gap: var(--sm-gap);
   width: 100%;
+  gap: var(--sm-gap);
   justify-content: center;
   align-content: start;
 }

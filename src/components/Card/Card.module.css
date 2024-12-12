@@ -1,57 +1,46 @@
-.characterCard {
-  width: 100%;
-  height: auto;
+.card {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  height: auto;
 }
 
-.characterImageWrapper {
-  width: 100%;
-  height: 189.97px;
-  overflow: hidden;
+.card__imageWrapper {
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  width: 100%;
+  height: 190px;
+  overflow: hidden;
 }
 
-.characterImage {
-  height: 100%;
+.card__image {
   width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
-.characterCardDivider {
+.card__divider {
   position: absolute;
   bottom: 0;
   left: 0;
-  background-color: var(--marvel-red);
+  width: 100%;
   height: var(--card-divider-width);
+  background-color: var(--marvel-red);
   border: none;
   box-shadow: none;
-  width: 100%;
   z-index: 10;
 }
 
-.characterInfo {
-  box-sizing: border-box;
+.card__info {
   display: flex;
-  width: 100%;
-  justify-content: space-between;
   align-items: center;
-  height: auto;
-  padding: var(--sm-padding) var(--sm-padding) var(--sm-padding)
-    var(--sm-padding);
-  text-align: center;
-  flex: 1;
-  clip-path: polygon(
-    0 0,
-    100% 0,
-    100% calc(100% - 12.86px),
-    calc(100% - 12.86px) 100%,
-    0 100%
-  );
+  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
+  padding: var(--sm-padding);
   background: linear-gradient(
     to top,
     var(--dark-color) 50%,
@@ -59,56 +48,67 @@
   );
   background-size: 100% 200%;
   background-position: right bottom;
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - 12.86px),
+    calc(100% - 12.86px) 100%,
+    0 100%
+  );
+  text-align: center;
   overflow: hidden;
-  border: none;
   transition: background-position 0.5s ease-in-out;
 }
 
-.characterCard:hover .characterInfo {
+.card:hover .card__info {
   background-position: right top;
 }
 
-.characterName {
+.card__name {
   width: var(--card-title-width);
-  font-size: var(--md-font-size);
+  font-family: var(--font-primary);
+  font-size: var(--xs-font-size);
+  font-weight: var(--sm-font-weight);
+  line-height: var(--sm-font-height);
   color: var(--light-color);
+  text-align: left;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  text-align: left;
 }
 
-.favoriteButton {
+.card__favoriteButton {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   background: transparent;
   border: none;
   cursor: pointer;
   outline: none;
 }
 
-.favoriteButton:focus,
-.favoriteButton:active {
+.card__favoriteButton:focus,
+.card__favoriteButton:active {
   outline: none;
   box-shadow: none;
   border: none;
 }
 
-.heartIcon {
-  width: 24px;
-  height: 22px;
+.card__icon {
+  width: 12px;
+  height: 10.84px;
   background: transparent;
+  cursor: pointer;
 }
 
-.favorited {
+.card__icon--favorited {
   color: var(--marvel-red);
   transition:
     background-color 0.3s ease-in,
     filter 0.3s ease-out;
 }
 
-.characterCard:hover .favorited {
+.card:hover .card__icon--favorited {
   background-color: var(--light-color);
   filter: brightness(0) invert(1);
   background: transparent;

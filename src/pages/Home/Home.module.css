@@ -1,13 +1,13 @@
 .home {
   display: flex;
   flex-direction: column;
-  margin: var(--lg-margin);
   gap: var(--md-gap);
+  margin: var(--lg-margin);
 }
 
-.title {
-  font-weight: var(--lg-font-weight);
+.home__title {
   font-size: var(--lg-font-size);
+  font-weight: var(--lg-font-weight);
   line-height: var(--lg-font-height);
   font-family: var(--font-primary);
 }

@@ -44,10 +44,12 @@
   --md-gap: 24px;
   --sm-gap: 16px;
   --xs-gap: 12px;
+  --xxs-gap: 8px;
   --lg-padding: 48px;
   --md-padding: 24px;
   --sm-padding: 16px;
   --xs-padding: 12px;
+  --xxs-padding: 8px;
   --lg-margin: 48px;
   --md-margin: 24px;
   --sm-margin: 16px;
@@ -72,9 +74,12 @@
   --card-min-width: 172.5px;
   --card-title-width: 108px;
 
+  /*Loading bar*/
+  --loading-bar-height: 4px;
+
   /* Colors */
   --text-color: #000000;
-  --grey-color: #333333;
+  --grey-color: #aaaaaa;
   --marvel-red: #ec1d24;
   --dark-color: #000000;
   --light-color: #ffffff;
